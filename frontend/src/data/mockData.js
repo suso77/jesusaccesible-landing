@@ -336,7 +336,7 @@ export const content = {
         },
         {
           title: 'Productivity & Collaboration',
-          items: ['Microsoft Office 365', 'Google Workspace', 'Trello', 'Teams', 'Planner']
+          items: ['Microsoft Office 365', 'Google Workspace', 'Trello', 'Teams', 'Planner', 'Jira']
         },
         {
           title: 'Technical Skills',
