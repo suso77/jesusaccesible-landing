@@ -761,6 +761,15 @@
   text-underline-offset: 3px;
 }
 
+.contact-info-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #1f2937;
+  padding: 12px;
+  min-height: 44px;
+}
+
 .contact-icon {
   width: 20px;
   height: 20px;
