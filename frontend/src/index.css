@@ -919,6 +919,11 @@
   text-underline-offset: 3px;
 }
 
+.footer-link:hover .footer-icon,
+.footer-link:focus-visible .footer-icon {
+  color: #ffffff;
+}
+
 .footer-text {
   display: flex;
   align-items: center;
