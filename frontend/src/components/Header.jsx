@@ -84,7 +84,8 @@ const Header = () => {
                 e.preventDefault();
                 handleNavClick(e, '#hero');
               }}
-              aria-label="Ir al inicio de la página"
+              aria-label={language === 'es' ? 'Ir al inicio de la página' : 'Go to homepage'}
+              title={language === 'es' ? 'Ir al inicio' : 'Go to home'}
             >
               JFA
             </a>
