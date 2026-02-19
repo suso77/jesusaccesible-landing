@@ -229,6 +229,12 @@
   min-width: 44px;
 }
 
+.lang-button:hover,
+.mobile-menu-button:hover {
+  background: #374151;
+  color: #ffffff;
+}
+
 .lang-text {
   margin-left: 6px;
   font-weight: 600;
