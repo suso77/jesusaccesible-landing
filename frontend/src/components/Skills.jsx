@@ -52,7 +52,7 @@ const Skills = () => {
         </div>
 
         <div className="certifications">
-          <h3 className="section-subtitle">{t.skills.certifications.title}</h3>
+          <h2 className="section-title certifications-title">{t.skills.certifications.title}</h2>
           <div className="certifications-grid">
             {t.skills.certifications.list.map((cert, index) => (
               <Card key={index} className="certification-card">
