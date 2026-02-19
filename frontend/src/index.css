@@ -95,7 +95,7 @@
 
   /* Focus visible - WCAG 2.4.7 - Enhanced for better contrast */
   *:focus-visible {
-    outline: 3px solid #2563eb;
+    outline: 4px solid #2563eb;
     outline-offset: 3px;
   }
 
@@ -107,9 +107,9 @@
   /* High contrast focus for buttons and links - WCAG 2.4.7 */
   button:focus-visible,
   a:focus-visible {
-    outline: 3px solid #2563eb;
-    outline-offset: 3px;
-    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.1);
+    outline: 4px solid #2563eb !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 7px rgba(37, 99, 235, 0.15) !important;
   }
 
   /* Ensure input focus is highly visible - WCAG 1.4.11 */
