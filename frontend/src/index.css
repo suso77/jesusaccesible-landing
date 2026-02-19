@@ -93,10 +93,10 @@
     top: 0;
   }
 
-  /* Focus visible - WCAG 2.4.7 */
+  /* Focus visible - WCAG 2.4.7 - Enhanced for better contrast */
   *:focus-visible {
-    outline: 3px solid hsl(var(--ring));
-    outline-offset: 2px;
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
   }
 
   /* Remove default focus for mouse users but keep for keyboard */
@@ -104,11 +104,21 @@
     outline: none;
   }
 
-  /* High contrast focus for buttons and links */
+  /* High contrast focus for buttons and links - WCAG 2.4.7 */
   button:focus-visible,
   a:focus-visible {
-    outline: 3px solid hsl(var(--ring));
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.1);
+  }
+
+  /* Ensure input focus is highly visible - WCAG 1.4.11 */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid #2563eb;
     outline-offset: 2px;
+    border-color: #2563eb;
   }
 }
 
