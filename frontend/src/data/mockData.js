@@ -320,7 +320,7 @@ export const content = {
       categories: [
         {
           title: 'Accessibility Tools',
-          items: ['Wave', 'Web Developer', 'Silktide', 'ANDI', 'Headings Map', 'NVDA', 'VoiceOver', 'axe DevTools']
+          items: ['Wave', 'Web Developer', 'Silktide', 'ANDI', 'Headings Map', 'NVDA', 'VoiceOver', 'axe DevTools', 'Colour Contrast Analyser', 'TalkBack', 'Google Lighthouse']
         },
         {
           title: 'Standards & Regulations',
