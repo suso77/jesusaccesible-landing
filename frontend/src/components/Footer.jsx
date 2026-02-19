@@ -30,7 +30,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <span className="footer-link">
+                <span className="footer-text">
                   <MapPin className="footer-icon" aria-hidden="true" />
                   {t.contact.info.location}
                 </span>
