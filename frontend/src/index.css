@@ -762,6 +762,11 @@
   text-underline-offset: 3px;
 }
 
+.contact-info-link:hover .contact-icon,
+.contact-info-link:focus-visible .contact-icon {
+  color: #ffffff;
+}
+
 .contact-info-text {
   display: flex;
   align-items: center;
