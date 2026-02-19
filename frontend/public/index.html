@@ -1,27 +1,118 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-        <meta name="description" content="A product of emergent.sh" />
+        <meta name="theme-color" content="#1a365d" />
+        
+        <!-- SEO Meta Tags -->
+        <title>Jesús Fernández Abeledo | Consultor de Accesibilidad Digital y Auditor WCAG</title>
+        <meta name="description" content="Consultor y Auditor de Accesibilidad Digital especializado en WCAG 2.1/2.2. Más de 5 años de experiencia creando experiencias web inclusivas. Pontevedra, Galicia, España." />
+        <meta name="keywords" content="accesibilidad web, WCAG, auditoría accesibilidad, consultor accesibilidad digital, UX inclusivo, analista web, Galicia, España" />
+        <meta name="author" content="Jesús Fernández Abeledo" />
+        <meta name="robots" content="index, follow" />
+        
+        <!-- Canonical URL -->
+        <link rel="canonical" href="https://digital-a11y.preview.emergentagent.com/" />
+        
+        <!-- Hreflang for multilingual -->
+        <link rel="alternate" hreflang="es" href="https://digital-a11y.preview.emergentagent.com/" />
+        <link rel="alternate" hreflang="en" href="https://digital-a11y.preview.emergentagent.com/en/" />
+        <link rel="alternate" hreflang="x-default" href="https://digital-a11y.preview.emergentagent.com/" />
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://digital-a11y.preview.emergentagent.com/" />
+        <meta property="og:title" content="Jesús Fernández Abeledo | Consultor de Accesibilidad Digital" />
+        <meta property="og:description" content="Consultor y Auditor de Accesibilidad Digital especializado en WCAG 2.1/2.2. Creando experiencias web inclusivas para todos." />
+        <meta property="og:locale" content="es_ES" />
+        <meta property="og:locale:alternate" content="en_US" />
+        <meta property="og:site_name" content="Jesús Fernández Abeledo - Accesibilidad Digital" />
+        
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Jesús Fernández Abeledo | Consultor de Accesibilidad Digital" />
+        <meta name="twitter:description" content="Consultor y Auditor de Accesibilidad Digital especializado en WCAG 2.1/2.2. Creando experiencias web inclusivas." />
+        
+        <!-- Schema.org JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Jesús Fernández Abeledo",
+            "jobTitle": "Consultor de Accesibilidad Digital",
+            "description": "Profesional con más de 5 años de experiencia en auditoría de accesibilidad web y app, especializado en WCAG 2.1/2.2 Nivel A, AA y AAA.",
+            "url": "https://digital-a11y.preview.emergentagent.com/",
+            "email": "s.fernandezabeledo@gmail.com",
+            "telephone": "+34680746254",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Pontevedra",
+                "addressRegion": "Galicia",
+                "addressCountry": "ES"
+            },
+            "sameAs": [
+                "https://linkedin.com/in/jesusfernandezabeledo"
+            ],
+            "knowsAbout": [
+                "Accesibilidad Web",
+                "WCAG 2.1",
+                "WCAG 2.2",
+                "Auditoría de Accesibilidad",
+                "UX Inclusivo",
+                "Diseño Universal",
+                "ARIA",
+                "Lectores de Pantalla"
+            ],
+            "hasCredential": [
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "Certificación IAAP WAS",
+                    "credentialCategory": "Professional Certification"
+                },
+                {
+                    "@type": "EducationalOccupationalCredential",
+                    "name": "Certificación IAAP CPACC",
+                    "credentialCategory": "Professional Certification"
+                }
+            ]
+        }
+        </script>
+        
+        <!-- Professional Service Schema -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "name": "Jesús Fernández Abeledo - Consultoría de Accesibilidad Digital",
+            "description": "Servicios profesionales de auditoría y consultoría en accesibilidad web según estándares WCAG 2.1 y 2.2",
+            "url": "https://digital-a11y.preview.emergentagent.com/",
+            "telephone": "+34680746254",
+            "email": "s.fernandezabeledo@gmail.com",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Pontevedra",
+                "addressRegion": "Galicia",
+                "addressCountry": "ES"
+            },
+            "areaServed": {
+                "@type": "Country",
+                "name": "España"
+            },
+            "serviceType": [
+                "Auditoría de Accesibilidad Web",
+                "Consultoría WCAG",
+                "Formación en Accesibilidad",
+                "Análisis UX Inclusivo"
+            ],
+            "priceRange": "$$"
+        }
+        </script>
+        
+        <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet" />
-        <!--
-        manifest.json provides metadata used when your web app is installed on a
-        user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-        -->
-        <!--
-        Notice the use of %PUBLIC_URL% in the tags above.
-        It will be replaced with the URL of the `public` folder during the build.
-        Only files inside the `public` folder can be referenced from the HTML.
-
-        Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-        work correctly both with client-side routing and a non-root public URL.
-        Learn how to configure a non-root public URL by running `npm run build`.
-        -->
-        <title>Emergent | Fullstack App</title>
         <script>window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);</script>
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
         <!--

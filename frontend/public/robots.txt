@@ -1,0 +1,11 @@
+# robots.txt - Jesús Fernández Abeledo Portfolio
+# Consultor de Accesibilidad Digital
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://digital-a11y.preview.emergentagent.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
