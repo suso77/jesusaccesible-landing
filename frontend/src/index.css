@@ -712,14 +712,15 @@
   min-height: 44px;
 }
 
-.contact-info-link:hover {
-  background: hsl(var(--accent));
+.contact-info-link:hover,
+.contact-info-link:focus-visible {
+  background: #e5e7eb;
 }
 
 .contact-icon {
   width: 20px;
   height: 20px;
-  color: hsl(var(--primary));
+  color: #364559;
   flex-shrink: 0;
 }
 
