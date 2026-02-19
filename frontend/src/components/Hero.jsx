@@ -4,6 +4,8 @@ import { Button } from './ui/button';
 import { Download, Mail } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Hero = () => {
   const { t } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
@@ -15,10 +17,24 @@ const Hero = () => {
     }
   };
 
-  const handleDownloadCV = () => {
-    // Mock download - will be replaced with actual download in backend integration
-    console.log('Download CV clicked');
-    alert(t.nav.downloadCV);
+  const handleDownloadCV = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/download-cv`);
+      if (!response.ok) throw new Error('Failed to download CV');
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'CV_Jesus_Fernandez_Abeledo.pdf';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Error downloading CV:', error);
+      alert('Error al descargar el CV. Por favor, intenta de nuevo.');
+    }
   };
 
   return (
