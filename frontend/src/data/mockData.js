@@ -133,7 +133,7 @@ export const content = {
         },
         {
           title: 'Productividad y Colaboración',
-          items: ['Microsoft Office 365', 'Google Workspace', 'Trello', 'Teams', 'Planner']
+          items: ['Microsoft Office 365', 'Google Workspace', 'Trello', 'Teams', 'Planner', 'Jira']
         },
         {
           title: 'Técnicas',
