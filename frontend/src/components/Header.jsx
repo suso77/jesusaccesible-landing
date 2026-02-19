@@ -90,6 +90,9 @@ const Header = () => {
                   className="nav-link"
                   onClick={(e) => handleNavClick(e, item.href)}
                   role="menuitem"
+                  aria-label={language === 'es'
+                    ? `Ir a sección ${item.label}`
+                    : `Go to ${item.label} section`}
                 >
                   {item.label}
                 </a>
