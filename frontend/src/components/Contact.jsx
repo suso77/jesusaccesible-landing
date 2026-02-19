@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Contact = () => {
   const { language, t } = useLanguage();
   const [formData, setFormData] = useState({
@@ -64,14 +66,23 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Mock API call - will be replaced with actual backend call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log('Form submitted:', formData);
+      const response = await fetch(`${BACKEND_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error sending message');
+      }
+
+      const data = await response.json();
       
       setFormStatus('success');
       toast({
-        title: t.contact.form.success,
+        title: data.message || t.contact.form.success,
         variant: 'default'
       });
       
