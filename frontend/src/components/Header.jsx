@@ -115,6 +115,7 @@ const Header = () => {
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
               className="mobile-menu-button mobile-only"
+              ref={menuButtonRef}
             >
               {mobileMenuOpen ? (
                 <X className="icon" aria-hidden="true" />
