@@ -27,21 +27,38 @@ const Contact = () => {
   const validateForm = () => {
     const newErrors = {};
 
+    // Validar nombre
     if (!formData.name.trim()) {
+      newErrors.name = t.contact.form.nameRequired;
+    } else if (formData.name.trim().length < 2) {
       newErrors.name = t.contact.form.nameRequired;
     }
 
+    // Validar email
     if (!formData.email.trim()) {
       newErrors.email = t.contact.form.emailRequired;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = t.contact.form.emailInvalid;
     }
 
+    // Validar teléfono (si se proporciona)
+    if (formData.phone.trim()) {
+      // Validar formato de teléfono internacional
+      const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
+      if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
+        newErrors.phone = t.contact.form.phoneInvalid;
+      }
+    }
+
+    // Validar servicio
     if (!formData.service) {
       newErrors.service = t.contact.form.serviceRequired;
     }
 
+    // Validar mensaje
     if (!formData.message.trim()) {
+      newErrors.message = t.contact.form.messageRequired;
+    } else if (formData.message.trim().length < 10) {
       newErrors.message = t.contact.form.messageRequired;
     }
 
