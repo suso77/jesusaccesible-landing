@@ -715,13 +715,15 @@
   text-decoration: none;
   padding: 12px;
   border-radius: var(--radius);
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, text-decoration 0.2s;
   min-height: 44px;
 }
 
 .contact-info-link:hover,
 .contact-info-link:focus-visible {
-  background: #e5e7eb;
+  background: #d1d5db;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .contact-icon {
