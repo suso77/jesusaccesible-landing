@@ -59,6 +59,9 @@ const Hero = () => {
               size="lg"
               onClick={handleContactClick}
               className="cta-primary"
+              aria-label={language === 'es' 
+                ? 'Solicitar auditoría, ir al formulario de contacto' 
+                : 'Request audit, go to contact form'}
             >
               <Mail className="button-icon" aria-hidden="true" />
               {t.hero.cta1}
@@ -68,6 +71,9 @@ const Hero = () => {
               variant="outline"
               onClick={handleDownloadCV}
               className="cta-secondary"
+              aria-label={language === 'es' 
+                ? 'Descargar CV en formato PDF' 
+                : 'Download CV in PDF format'}
             >
               <Download className="button-icon" aria-hidden="true" />
               {t.hero.cta2}
