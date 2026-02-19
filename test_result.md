@@ -101,3 +101,63 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Probar el backend de la landing page de accesibilidad - Test POST /api/contact and GET /api/download-cv endpoints"
+
+backend:
+  - task: "Contact Form API Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ POST /api/contact endpoint fully functional. Successfully processes contact form submissions with proper validation. Saves data to MongoDB and handles email sending (MOCKED - SMTP not configured, emails logged instead). Returns correct success response. Email validation working (422 for invalid emails). Required field validation working (422 for missing fields). Response format: {success: true, message: 'Mensaje enviado correctamente. Te contactaré pronto.'}"
+
+  - task: "CV Download API Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ GET /api/download-cv endpoint fully functional. Returns valid PDF file (180,780 bytes) with correct Content-Type: application/pdf header. Content-Disposition header includes proper filename 'CV_Jesus_Fernandez_Abeledo.pdf'. PDF file exists at /app/backend/static/CV_Jesus_Fernandez.pdf and is served correctly. All HTTP headers are properly configured."
+
+  - task: "API Connectivity and Base Functionality"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ API root endpoint /api/ accessible and returns expected response: {message: 'Hello World'}. Backend server running correctly on configured URL. CORS headers properly configured. All API endpoints accessible via public URL: https://mi-curriculum-4.preview.emergentagent.com/api"
+
+frontend:
+  # No frontend testing performed as per instructions
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Contact Form API Endpoint"
+    - "CV Download API Endpoint"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "testing"
+      message: "Backend testing completed successfully. All requested endpoints (POST /api/contact and GET /api/download-cv) are working correctly. Contact form processes submissions, validates data, saves to MongoDB, and handles email sending (MOCKED). CV download serves valid PDF with proper headers. No critical issues found. Email functionality is mocked (SMTP not configured) but this is expected in test environment."
