@@ -3,6 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { useFocusTrap } from '../hooks/useFocusTrap';
+import Logo from './Logo';
 
 const Header = () => {
   const { language, switchLanguage, t } = useLanguage();
