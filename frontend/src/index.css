@@ -847,14 +847,15 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: hsl(0 0% 85%);
+  color: #d1d5db;
   text-decoration: none;
   transition: color 0.2s;
   min-height: 32px;
 }
 
-.footer-link:hover {
-  color: hsl(0 0% 100%);
+.footer-link:hover,
+.footer-link:focus-visible {
+  color: #f9fafb;
 }
 
 .footer-icon {
