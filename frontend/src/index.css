@@ -210,8 +210,13 @@
 }
 
 .nav-link:hover {
-  background: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background: #e5e7eb;
+  color: #1f2937;
+}
+
+.nav-link:focus-visible {
+  background: #e5e7eb;
+  color: #1f2937;
 }
 
 .nav-actions {
