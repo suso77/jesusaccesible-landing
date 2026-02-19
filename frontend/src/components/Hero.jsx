@@ -14,6 +14,14 @@ const Hero = () => {
     const contactSection = document.querySelector('#contacto');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      
+      // Focus on the first form field (name input) after scroll
+      setTimeout(() => {
+        const nameInput = document.querySelector('#name');
+        if (nameInput) {
+          nameInput.focus();
+        }
+      }, prefersReducedMotion ? 100 : 800);
     }
   };
 
