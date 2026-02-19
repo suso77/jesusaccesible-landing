@@ -59,6 +59,7 @@ El usuario, un Consultor de Accesibilidad Digital, solicitó la creación de un 
 - [x] Aria-labels para lectores de pantalla
 - [x] Navegación en Footer
 - [x] SEO: sitemap.xml, robots.txt, Schema.org, meta tags
+- [x] Favicon personalizado con iniciales "JFA"
 
 ## Tareas Pendientes
 
