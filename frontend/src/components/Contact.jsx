@@ -154,7 +154,7 @@ const Contact = () => {
                 </a>
               </li>
               <li>
-                <div className="contact-info-link">
+                <div className="contact-info-text">
                   <MapPin className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.location}</span>
                 </div>
