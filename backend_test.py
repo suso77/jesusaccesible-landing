@@ -10,7 +10,7 @@ import os
 from datetime import datetime
 
 # Get backend URL from frontend .env
-BACKEND_URL = "https://mi-curriculum-4.preview.emergentagent.com"
+BACKEND_URL = "https://digital-a11y.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 def test_contact_endpoint():

@@ -139,7 +139,7 @@ backend:
     status_history:
         - working: true
           agent: "testing"
-          comment: "✅ API root endpoint /api/ accessible and returns expected response: {message: 'Hello World'}. Backend server running correctly on configured URL. CORS headers properly configured. All API endpoints accessible via public URL: https://mi-curriculum-4.preview.emergentagent.com/api"
+          comment: "✅ API root endpoint /api/ accessible and returns expected response: {message: 'Hello World'}. Backend server running correctly on configured URL. CORS headers properly configured. All API endpoints accessible via public URL: https://digital-a11y.preview.emergentagent.com/api"
 
 frontend:
   # No frontend testing performed as per instructions
