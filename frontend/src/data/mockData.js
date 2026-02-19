@@ -403,7 +403,8 @@ export const content = {
       copyright: '© 2025 Jesús Fernández Abeledo. All rights reserved.',
       wcag: 'This site complies with WCAG 2.2 Level AA',
       privacy: 'Privacy Policy',
-      legal: 'Legal Notice'
+      legal: 'Legal Notice',
+      navigation: 'Navigation'
     }
   }
 };
