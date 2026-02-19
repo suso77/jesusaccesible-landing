@@ -211,8 +211,8 @@
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  background: #9ca3af;
-  color: #111827;
+  background: #374151;
+  color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
