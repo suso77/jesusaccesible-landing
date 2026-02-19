@@ -157,6 +157,11 @@ export const content = {
             title: 'Certificado Profesional de Soporte de TI de Google',
             issuer: 'Coursera – Google',
             year: '2021'
+          },
+          {
+            title: 'Técnico Superior en Producción de Audiovisuales, Radio y Espectáculos',
+            issuer: 'Cinematography and Film/Video Production',
+            year: '2002'
           }
         ]
       }
