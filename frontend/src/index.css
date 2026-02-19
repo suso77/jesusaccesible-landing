@@ -756,7 +756,8 @@
 
 .contact-info-link:hover,
 .contact-info-link:focus-visible {
-  background: #d1d5db;
+  background: #374151;
+  color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
