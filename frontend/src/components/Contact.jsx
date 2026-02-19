@@ -142,13 +142,25 @@ const Contact = () => {
             <h3 className="contact-info-title">{t.contact.cta}</h3>
             <ul className="contact-info-list">
               <li>
-                <a href={`mailto:${t.contact.info.email}`} className="contact-info-link">
+                <a 
+                  href={`mailto:${t.contact.info.email}`} 
+                  className="contact-info-link"
+                  aria-label={language === 'es' 
+                    ? `Correo electrónico: ${t.contact.info.email}` 
+                    : `Email: ${t.contact.info.email}`}
+                >
                   <Mail className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.email}</span>
                 </a>
               </li>
               <li>
-                <a href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`} className="contact-info-link">
+                <a 
+                  href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`} 
+                  className="contact-info-link"
+                  aria-label={language === 'es' 
+                    ? `Teléfono: ${t.contact.info.phone}` 
+                    : `Phone: ${t.contact.info.phone}`}
+                >
                   <Phone className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.phone}</span>
                 </a>
@@ -165,6 +177,9 @@ const Contact = () => {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="contact-info-link"
+                  aria-label={language === 'es' 
+                    ? 'LinkedIn, se abre en una nueva ventana' 
+                    : 'LinkedIn, opens in a new window'}
                 >
                   <Linkedin className="contact-icon" aria-hidden="true" />
                   <span>LinkedIn</span>
