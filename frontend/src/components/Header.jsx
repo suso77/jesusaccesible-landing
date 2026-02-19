@@ -78,18 +78,7 @@ const Header = () => {
       <div className="container">
         <nav className="nav" role="navigation" aria-label="Main navigation">
           <div className="nav-brand">
-            <a 
-              href="/" 
-              className="nav-logo notranslate" 
-              translate="no"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              aria-label={language === 'es' ? 'Ir al inicio de la página' : 'Go to homepage'}
-            >
-              JFA
-            </a>
+            <Logo />
           </div>
 
           {/* Desktop Navigation */}
