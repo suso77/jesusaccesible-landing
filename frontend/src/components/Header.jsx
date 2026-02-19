@@ -24,6 +24,16 @@ const Header = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setMobileMenuOpen(false);
+      
+      // If navigating to contact section, focus on name input
+      if (href === '#contacto') {
+        setTimeout(() => {
+          const nameInput = document.querySelector('#name');
+          if (nameInput) {
+            nameInput.focus();
+          }
+        }, 800); // Wait for smooth scroll to complete
+      }
     }
   };
 
