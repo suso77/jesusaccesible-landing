@@ -891,7 +891,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #d1d5db;
+  color: #e5e7eb;
   text-decoration: none;
   transition: color 0.2s, text-decoration 0.2s;
   min-height: 32px;
@@ -899,7 +899,7 @@
 
 .footer-link:hover,
 .footer-link:focus-visible {
-  color: #f9fafb;
+  color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
