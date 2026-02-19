@@ -8,6 +8,7 @@ const Header = () => {
   const { language, switchLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useFocusTrap(mobileMenuOpen);
+  const menuButtonRef = React.useRef(null);
 
   const navItems = [
     { href: '#sobre-mi', label: t.nav.about },
@@ -32,13 +33,17 @@ const Header = () => {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
+    // Return focus to menu button when closing
+    setTimeout(() => {
+      menuButtonRef.current?.focus();
+    }, 100);
   };
 
   // Handle escape key
   React.useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape' && mobileMenuOpen) {
-        setMobileMenuOpen(false);
+        closeMobileMenu();
       }
     };
     document.addEventListener('keydown', handleEscape);
