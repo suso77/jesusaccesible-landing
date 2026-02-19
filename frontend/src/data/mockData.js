@@ -199,7 +199,8 @@ export const content = {
       copyright: '© 2025 Jesús Fernández Abeledo. Todos los derechos reservados.',
       wcag: 'Este sitio cumple con WCAG 2.2 Nivel AA',
       privacy: 'Política de privacidad',
-      legal: 'Aviso legal'
+      legal: 'Aviso legal',
+      navigation: 'Navegación'
     }
   },
   en: {
