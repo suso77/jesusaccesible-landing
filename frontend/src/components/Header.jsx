@@ -113,8 +113,8 @@ const Header = () => {
               className="lang-button"
             >
               <Globe className="icon" aria-hidden="true" />
-              <span className="sr-only">{language === 'es' ? 'EN' : 'ES'}</span>
-              <span aria-hidden="true" className="lang-text">{language === 'es' ? 'EN' : 'ES'}</span>
+              <span className="sr-only">{language === 'es' ? 'ES' : 'EN'}</span>
+              <span aria-hidden="true" className="lang-text">{language === 'es' ? 'ES' : 'EN'}</span>
             </Button>
 
             <Button
