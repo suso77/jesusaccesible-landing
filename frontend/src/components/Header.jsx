@@ -78,9 +78,12 @@ const Header = () => {
         <nav className="nav" role="navigation" aria-label="Main navigation">
           <div className="nav-brand">
             <a 
-              href="#" 
+              href="/" 
               className="nav-logo" 
-              onClick={(e) => handleNavClick(e, '#hero')}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick(e, '#hero');
+              }}
               aria-label="Ir al inicio de la página"
             >
               JFA
