@@ -746,7 +746,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: hsl(var(--foreground));
+  color: #1f2937;
   text-decoration: none;
   padding: 12px;
   border-radius: var(--radius);
