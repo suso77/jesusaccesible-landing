@@ -387,7 +387,7 @@ export const content = {
         email: 's.fernandezabeledo@gmail.com',
         phone: '+34 680 746 254',
         location: 'Pontevedra, Galicia, Spain',
-        linkedin: 'linkedin.com/in/jesusfernandezabeledo'
+        linkedin: 'www.linkedin.com/in/jesusfernandezabeledo/'
       },
       cta: 'You can also contact me directly via:'
     },
