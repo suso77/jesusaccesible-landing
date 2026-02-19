@@ -49,6 +49,9 @@ const Footer = () => {
                     href={item.href} 
                     className="footer-link"
                     onClick={(e) => handleNavClick(e, item.href)}
+                    aria-label={language === 'es'
+                      ? `Ir a sección ${item.label}`
+                      : `Go to ${item.label} section`}
                   >
                     {item.label}
                   </a>
@@ -61,13 +64,25 @@ const Footer = () => {
             <h3 className="footer-heading">{t.nav.contact}</h3>
             <ul className="footer-links">
               <li>
-                <a href={`mailto:${t.contact.info.email}`} className="footer-link">
+                <a 
+                  href={`mailto:${t.contact.info.email}`} 
+                  className="footer-link"
+                  aria-label={language === 'es' 
+                    ? `Correo electrónico: ${t.contact.info.email}` 
+                    : `Email: ${t.contact.info.email}`}
+                >
                   <Mail className="footer-icon" aria-hidden="true" />
                   {t.contact.info.email}
                 </a>
               </li>
               <li>
-                <a href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`} className="footer-link">
+                <a 
+                  href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`} 
+                  className="footer-link"
+                  aria-label={language === 'es' 
+                    ? `Teléfono: ${t.contact.info.phone}` 
+                    : `Phone: ${t.contact.info.phone}`}
+                >
                   <Phone className="footer-icon" aria-hidden="true" />
                   {t.contact.info.phone}
                 </a>
@@ -84,6 +99,9 @@ const Footer = () => {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="footer-link"
+                  aria-label={language === 'es' 
+                    ? 'LinkedIn, se abre en una nueva ventana' 
+                    : 'LinkedIn, opens in a new window'}
                 >
                   <Linkedin className="footer-icon" aria-hidden="true" />
                   LinkedIn
