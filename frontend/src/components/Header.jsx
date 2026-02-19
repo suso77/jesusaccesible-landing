@@ -106,7 +106,9 @@ const Header = () => {
               variant="ghost"
               size="icon"
               onClick={toggleLanguage}
-              aria-label={language === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+              aria-label={language === 'es' 
+                ? `Idioma actual: Español. Cambiar a Inglés` 
+                : `Current language: English. Switch to Spanish`}
               className="lang-button"
             >
               <Globe className="icon" aria-hidden="true" />
