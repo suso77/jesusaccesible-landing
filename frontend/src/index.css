@@ -913,6 +913,14 @@
   text-underline-offset: 3px;
 }
 
+.footer-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #e5e7eb;
+  min-height: 32px;
+}
+
 .footer-icon {
   width: 18px;
   height: 18px;
