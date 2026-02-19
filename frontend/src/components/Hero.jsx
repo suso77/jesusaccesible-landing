@@ -7,7 +7,7 @@ import { useReducedMotion } from '../hooks/useReducedMotion';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Hero = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
 
   const handleContactClick = () => {
