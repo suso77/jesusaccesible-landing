@@ -627,8 +627,8 @@
 .certification-icon {
   width: 40px;
   height: 40px;
-  background: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background: #364559;
+  color: #FAFAFA;
   border-radius: var(--radius);
   display: flex;
   align-items: center;
