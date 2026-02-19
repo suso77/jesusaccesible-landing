@@ -79,13 +79,13 @@ const Header = () => {
           <div className="nav-brand">
             <a 
               href="/" 
-              className="nav-logo" 
+              className="nav-logo notranslate" 
+              translate="no"
               onClick={(e) => {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               aria-label={language === 'es' ? 'Ir al inicio de la página' : 'Go to homepage'}
-              title=""
             >
               JFA
             </a>
