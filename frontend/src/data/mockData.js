@@ -117,7 +117,7 @@ export const content = {
       categories: [
         {
           title: 'Herramientas de Accesibilidad',
-          items: ['Wave', 'Web Developer', 'Silktide', 'ANDI', 'Headings Map', 'NVDA', 'VoiceOver', 'axe DevTools']
+          items: ['Wave', 'Web Developer', 'Silktide', 'ANDI', 'Headings Map', 'NVDA', 'VoiceOver', 'axe DevTools', 'Colour Contrast Analyser', 'TalkBack', 'Google Lighthouse']
         },
         {
           title: 'Normativas y Estándares',
