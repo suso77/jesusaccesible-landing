@@ -60,6 +60,7 @@ El usuario, un Consultor de Accesibilidad Digital, solicitó la creación de un 
 - [x] Navegación en Footer
 - [x] SEO: sitemap.xml, robots.txt, Schema.org, meta tags
 - [x] Favicon personalizado con iniciales "JFA"
+- [x] Verificación WCAG 2.1/2.2 Nivel A & AA - TODOS LOS TESTS PASADOS
 
 ## Tareas Pendientes
 
@@ -67,7 +68,7 @@ El usuario, un Consultor de Accesibilidad Digital, solicitó la creación de un 
 - [x] ~~Implementación SEO: sitemap.xml, robots.txt, Schema.org~~ ✅ COMPLETADO
 
 ### P2 - Futuras
-- [ ] Verificación avanzada de accesibilidad (teclado, lectores de pantalla, zoom 200%/400%)
+- [x] ~~Verificación avanzada de accesibilidad (teclado, lectores de pantalla, zoom 200%/400%)~~ ✅ COMPLETADO
 - [ ] Sección FAQ
 - [ ] Funcionalidad "Agendar consulta" (Calendly)
 
