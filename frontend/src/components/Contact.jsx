@@ -230,8 +230,16 @@ const Contact = () => {
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleChange('phone', e.target.value)}
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? 'phone-error' : undefined}
                 disabled={isSubmitting}
+                placeholder="+34 600 000 000"
               />
+              {errors.phone && (
+                <span id="phone-error" className="error-message" role="alert">
+                  {errors.phone}
+                </span>
+              )}
             </div>
 
             <div className="form-group">
