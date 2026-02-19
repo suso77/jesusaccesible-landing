@@ -359,6 +359,11 @@ export const content = {
             title: 'Google IT Support Professional Certificate',
             issuer: 'Coursera – Google',
             year: '2021'
+          },
+          {
+            title: 'Higher Technician in Audiovisual Production, Radio and Shows',
+            issuer: 'Cinematography and Film/Video Production',
+            year: '2002'
           }
         ]
       }
