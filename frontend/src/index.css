@@ -227,6 +227,11 @@
 .mobile-menu-button {
   min-height: 44px;
   min-width: 44px;
+  padding: 8px 12px;
+}
+
+.lang-button {
+  min-width: 60px;
 }
 
 .lang-button:hover,
