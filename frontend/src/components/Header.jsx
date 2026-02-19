@@ -82,10 +82,10 @@ const Header = () => {
               className="nav-logo" 
               onClick={(e) => {
                 e.preventDefault();
-                handleNavClick(e, '#hero');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               aria-label={language === 'es' ? 'Ir al inicio de la página' : 'Go to homepage'}
-              title={language === 'es' ? 'Ir al inicio' : 'Go to home'}
+              title=""
             >
               JFA
             </a>
