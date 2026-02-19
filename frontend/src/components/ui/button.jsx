@@ -17,7 +17,7 @@ const buttonVariants = cva(
           "border-2 border-[#364559] text-[#364559] shadow-sm hover:bg-[#364559] hover:text-white focus-visible:ring-[#2563eb]",
         secondary:
           "bg-[#e5e7eb] text-[#1f2937] shadow-sm hover:bg-[#d1d5db] focus-visible:ring-[#2563eb]",
-        ghost: "hover:bg-[#e5e7eb] hover:text-[#1f2937] focus-visible:ring-[#2563eb]",
+        ghost: "hover:bg-[#374151] hover:text-white focus-visible:ring-[#2563eb]",
         link: "text-[#364559] underline-offset-4 hover:underline focus-visible:ring-[#2563eb]",
       },
       size: {
