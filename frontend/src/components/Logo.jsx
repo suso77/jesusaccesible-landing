@@ -12,7 +12,7 @@ const Logo = () => {
       className="nav-logo notranslate" 
       translate="no"
       onClick={handleClick}
-      aria-label="Ir al inicio de la página"
+      aria-label="JFA, Jesús Fernández Abeledo, ir al inicio de la página"
       data-content="JFA"
     >
       <span className="notranslate" translate="no">JFA</span>
