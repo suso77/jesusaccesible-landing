@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Mail, Phone, MapPin, Linkedin } from 'lucide-react';
 
 const Footer = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   const navItems = [
     { href: '#sobre-mi', label: t.nav.about },
