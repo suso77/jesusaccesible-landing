@@ -1,30 +1,54 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Award } from 'lucide-react';
+import { Award, Code, Shield, BarChart3, Search, Users } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
+const iconMap = {
+  accessibility: Shield,
+  standards: Award,
+  analytics: BarChart3,
+  seo: Search,
+  productivity: Users,
+  technical: Code
+};
+
 const Skills = () => {
   const { t } = useLanguage();
+
+  const getCategoryIcon = (index) => {
+    const icons = ['accessibility', 'standards', 'analytics', 'seo', 'productivity', 'technical'];
+    return iconMap[icons[index]] || Code;
+  };
 
   return (
     <section id="habilidades" className="section section-alt" aria-labelledby="skills-heading">
       <div className="container">
         <h2 id="skills-heading" className="section-title">{t.skills.title}</h2>
         
-        <div className="skills-grid">
-          {t.skills.categories.map((category, index) => (
-            <div key={index} className="skill-category">
-              <h3 className="skill-category-title">{category.title}</h3>
-              <div className="skill-tags">
-                {category.items.map((skill, i) => (
-                  <Badge key={i} variant="secondary" className="skill-badge">
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="skills-grid-cards">
+          {t.skills.categories.map((category, index) => {
+            const IconComponent = getCategoryIcon(index);
+            return (
+              <Card key={index} className="skill-card">
+                <CardHeader>
+                  <div className="skill-card-icon" aria-hidden="true">
+                    <IconComponent className="icon" />
+                  </div>
+                  <CardTitle className="skill-card-title">{category.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="skill-tags">
+                    {category.items.map((skill, i) => (
+                      <Badge key={i} variant="secondary" className="skill-badge">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
 
         <div className="certifications">
