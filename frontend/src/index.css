@@ -186,6 +186,15 @@
   display: none;
 }
 
+/* Prevent Google Translate from translating logo */
+.notranslate {
+  transform: translateX(0);
+}
+
+.nav-brand .notranslate {
+  pointer-events: auto;
+}
+
 .nav-menu {
   display: none;
   list-style: none;
