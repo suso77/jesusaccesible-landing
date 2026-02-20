@@ -1,87 +1,137 @@
-import React, { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useLanguage } from '../context/LanguageContext';
-import { ArrowLeft } from 'lucide-react';
+import React, { useEffect } from "react";
+import "./App.css";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { LanguageProvider } from "./context/LanguageContext";
+import { Toaster } from "./components/ui/toaster";
+import SkipLink from "./components/SkipLink";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Services from "./components/Services";
+import Experience from "./components/Experience";
+import Skills from "./components/Skills";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import LegalPage from "./components/LegalPage";
 
-const LegalPage = () => {
-  const { language, t } = useLanguage();
+const MainLayout = () => {
   const location = useLocation();
 
-  const h1Ref = useRef(null);
-
-  // Extract page type from URL path
-  const pathParts = location.pathname.split('/').filter(Boolean);
-  const pageType = pathParts[pathParts.length - 1]; // last part of path (legal, privacy, accessibility)
-
-  const pageData = t.legalPages?.[pageType];
-
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const isEnglish = location.pathname.startsWith("/en");
+    const lang = isEnglish ? "en" : "es";
+    document.documentElement.lang = lang;
 
-    // Update document title
-    if (pageData?.title) {
-      document.title = `${pageData.title} | Jesús Fernández Abeledo`;
+    const title = isEnglish
+      ? "Jesús Fernández Abeledo | Digital Accessibility Consultant"
+      : "Jesús Fernández Abeledo | Consultor de Accesibilidad Digital";
+    document.title = title;
+
+    // hreflang
+    const existingHreflangs = document.querySelectorAll('link[rel="alternate"]');
+    existingHreflangs.forEach((link) => link.remove());
+
+    const path = location.pathname;
+    const isEnPath = path.startsWith("/en");
+    const pathWithoutLang = isEnPath ? path.replace(/^\/en/, "") || "/" : path;
+
+    const esHref = window.location.origin + pathWithoutLang;
+    const enHref =
+      window.location.origin + (pathWithoutLang === "/" ? "/en" : "/en" + pathWithoutLang);
+
+    const hreflangs = [
+      { hreflang: "es-ES", href: esHref },
+      { hreflang: "en", href: enHref },
+      { hreflang: "x-default", href: esHref },
+    ];
+
+    hreflangs.forEach(({ hreflang, href }) => {
+      const link = document.createElement("link");
+      link.rel = "alternate";
+      link.hreflang = hreflang;
+      link.href = href;
+      document.head.appendChild(link);
+    });
+
+    // meta description (genérica)
+    const metaDescription = document.querySelector('meta[name="description"]');
+    const description = isEnglish
+      ? "Digital accessibility consultant and auditor specialized in WCAG 2.2 compliance. Web analytics expert. Pontevedra · Galicia · Spain."
+      : "Consultor y auditor de accesibilidad digital especializado en cumplimiento WCAG 2.2. Experto en analítica web. Pontevedra · Galicia · España.";
+
+    if (metaDescription) {
+      metaDescription.setAttribute("content", description);
+    } else {
+      const meta = document.createElement("meta");
+      meta.name = "description";
+      meta.content = description;
+      document.head.appendChild(meta);
     }
 
-    // Move focus to main heading (better for keyboard and screen readers in SPAs)
-    // Timeout helps ensure the DOM is updated before focusing.
-    window.setTimeout(() => {
-      h1Ref.current?.focus();
-    }, 0);
-  }, [pageData, location.pathname]);
-
-  if (!pageData) {
-    return (
-      <div className="legal-page">
-        <div className="container">
-          <p>{language === 'es' ? 'Página no encontrada' : 'Page not found'}</p>
-          <Link to={language === 'es' ? '/' : '/en'} className="back-link">
-            <ArrowLeft className="back-icon" aria-hidden="true" />
-            {t.legalPages?.backToHome || 'Volver al inicio'}
-          </Link>
-        </div>
-      </div>
-    );
-  }
+    // canonical
+    const existingCanonical = document.querySelector('link[rel="canonical"]');
+    const canonicalUrl = window.location.origin + location.pathname;
+    if (existingCanonical) {
+      existingCanonical.href = canonicalUrl;
+    } else {
+      const canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      canonical.href = canonicalUrl;
+      document.head.appendChild(canonical);
+    }
+  }, [location.pathname]);
 
   return (
-    <div className="legal-page">
-      <div className="container">
-        <Link
-          to={language === 'es' ? '/' : '/en'}
-          className="back-link"
-          aria-label={language === 'es' ? 'Volver a la página principal' : 'Back to main page'}
-        >
-          <ArrowLeft className="back-icon" aria-hidden="true" />
-          {t.legalPages.backToHome}
-        </Link>
-
-        <article className="legal-content">
-          <header>
-            <h1 ref={h1Ref} tabIndex="-1" className="legal-title">
-              {pageData.title}
-            </h1>
-            <p className="legal-updated">
-              {t.legalPages.lastUpdated}: {language === 'es' ? '1 de enero de 2025' : 'January 1, 2025'}
-            </p>
-          </header>
-
-          {pageData.sections.map((section, index) => (
-            <section key={index} className="legal-section" aria-labelledby={`section-${index}`}>
-              <h2 id={`section-${index}`} className="legal-section-title">
-                {section.title}
-              </h2>
-              <div className="legal-section-content">
-                {section.content.split('\n\n').map((paragraph, pIndex) => (
-                  <p key={pIndex}>{paragraph}</p>
-                ))}
-              </div>
-            </section>
-          ))}
-        </article>
-      </div>
-    </div>
+    <>
+      <SkipLink />
+      <Header />
+      <main id="main-content" tabIndex="-1">
+        <Hero />
+        <About />
+        <Services />
+        <Experience />
+        <Skills />
+        <Contact />
+      </main>
+      <Footer />
+      <Toaster />
+    </>
   );
 };
 
-export default LegalPage;
+const LegalLayout = () => {
+  return (
+    <>
+      <SkipLink />
+      <Header />
+      <main id="main-content" tabIndex="-1">
+        <LegalPage />
+      </main>
+      <Footer />
+      <Toaster />
+    </>
+  );
+};
+
+function App() {
+  return (
+    <BrowserRouter>
+      <LanguageProvider>
+        <Routes>
+          <Route path="/" element={<MainLayout />} />
+          <Route path="/en" element={<MainLayout />} />
+
+          <Route path="/legal" element={<LegalLayout />} />
+          <Route path="/privacy" element={<LegalLayout />} />
+          <Route path="/accessibility" element={<LegalLayout />} />
+
+          <Route path="/en/legal" element={<LegalLayout />} />
+          <Route path="/en/privacy" element={<LegalLayout />} />
+          <Route path="/en/accessibility" element={<LegalLayout />} />
+        </Routes>
+      </LanguageProvider>
+    </BrowserRouter>
+  );
+}
+
+export default App;
