@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { Mail, Phone, MapPin, Linkedin } from 'lucide-react';
 
@@ -12,6 +13,14 @@ const Footer = () => {
     { href: '#habilidades', label: t.nav.skills },
     { href: '#contacto', label: t.nav.contact }
   ];
+
+  const legalLinks = [
+    { path: 'legal', label: t.footer.legal },
+    { path: 'privacy', label: t.footer.privacy },
+    { path: 'accessibility', label: t.footer.accessibility }
+  ];
+
+  const basePath = language === 'es' ? '' : '/en';
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
@@ -113,7 +122,20 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <p className="footer-copyright">{t.footer.copyright}</p>
-          <p className="footer-wcag">{t.footer.wcag}</p>
+          <nav className="footer-legal" aria-label={language === 'es' ? 'Enlaces legales' : 'Legal links'}>
+            <ul className="footer-legal-links">
+              {legalLinks.map((link, index) => (
+                <li key={index}>
+                  <Link 
+                    to={`${basePath}/${link.path}`}
+                    className="footer-legal-link"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>
