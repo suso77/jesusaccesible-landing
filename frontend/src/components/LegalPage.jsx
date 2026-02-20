@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { ArrowLeft } from 'lucide-react';
@@ -6,6 +6,8 @@ import { ArrowLeft } from 'lucide-react';
 const LegalPage = () => {
   const { language, t } = useLanguage();
   const location = useLocation();
+
+  const h1Ref = useRef(null);
 
   // Extract page type from URL path
   const pathParts = location.pathname.split('/').filter(Boolean);
@@ -15,11 +17,16 @@ const LegalPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
+
     // Update document title
     if (pageData?.title) {
       document.title = `${pageData.title} | Jesús Fernández Abeledo`;
     }
+
+    // Move focus to main heading (SPA accessibility)
+    window.setTimeout(() => {
+      h1Ref.current?.focus();
+    }, 0);
   }, [pageData, location.pathname]);
 
   if (!pageData) {
@@ -39,11 +46,11 @@ const LegalPage = () => {
   return (
     <div className="legal-page">
       <div className="container">
-        <Link 
-          to={language === 'es' ? '/' : '/en'} 
+        <Link
+          to={language === 'es' ? '/' : '/en'}
           className="back-link"
-          aria-label={language === 'es' 
-            ? 'Volver a la página principal' 
+          aria-label={language === 'es'
+            ? 'Volver a la página principal'
             : 'Back to main page'}
         >
           <ArrowLeft className="back-icon" aria-hidden="true" />
@@ -52,7 +59,9 @@ const LegalPage = () => {
 
         <article className="legal-content">
           <header>
-            <h1 className="legal-title">{pageData.title}</h1>
+            <h1 ref={h1Ref} tabIndex="-1" className="legal-title">
+              {pageData.title}
+            </h1>
             <p className="legal-updated">
               {t.legalPages.lastUpdated}: {language === 'es' ? '1 de enero de 2025' : 'January 1, 2025'}
             </p>
