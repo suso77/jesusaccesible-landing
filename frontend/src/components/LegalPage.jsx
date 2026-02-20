@@ -11,19 +11,18 @@ const LegalPage = () => {
 
   // Extract page type from URL path
   const pathParts = location.pathname.split('/').filter(Boolean);
-  const pageType = pathParts[pathParts.length - 1]; // last part of path (legal, privacy, accessibility)
+  const pageType = pathParts[pathParts.length - 1]; // legal, privacy, accessibility
 
   const pageData = t.legalPages?.[pageType];
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // Update document title
     if (pageData?.title) {
       document.title = `${pageData.title} | Jesús Fernández Abeledo`;
     }
 
-    // Move focus to main heading (SPA accessibility)
+    // Focus H1 for SPA a11y
     window.setTimeout(() => {
       h1Ref.current?.focus();
     }, 0);
@@ -49,9 +48,7 @@ const LegalPage = () => {
         <Link
           to={language === 'es' ? '/' : '/en'}
           className="back-link"
-          aria-label={language === 'es'
-            ? 'Volver a la página principal'
-            : 'Back to main page'}
+          aria-label={language === 'es' ? 'Volver a la página principal' : 'Back to main page'}
         >
           <ArrowLeft className="back-icon" aria-hidden="true" />
           {t.legalPages.backToHome}
@@ -69,7 +66,9 @@ const LegalPage = () => {
 
           {pageData.sections.map((section, index) => (
             <section key={index} className="legal-section" aria-labelledby={`section-${index}`}>
-              <h2 id={`section-${index}`} className="legal-section-title">{section.title}</h2>
+              <h2 id={`section-${index}`} className="legal-section-title">
+                {section.title}
+              </h2>
               <div className="legal-section-content">
                 {section.content.split('\n\n').map((paragraph, pIndex) => (
                   <p key={pIndex}>{paragraph}</p>
