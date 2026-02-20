@@ -22,7 +22,6 @@ const LegalPage = () => {
       document.title = `${pageData.title} | Jesús Fernández Abeledo`;
     }
 
-    // Focus H1 for SPA a11y
     window.setTimeout(() => {
       h1Ref.current?.focus();
     }, 0);
