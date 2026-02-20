@@ -27,7 +27,7 @@ const MainLayout = () => {
       : "Jesús Fernández Abeledo | Consultor de Accesibilidad Digital";
     document.title = title;
 
-    // hreflang
+    // hreflang dinámico según ruta
     const existingHreflangs = document.querySelectorAll('link[rel="alternate"]');
     existingHreflangs.forEach((link) => link.remove());
 
@@ -68,9 +68,10 @@ const MainLayout = () => {
       document.head.appendChild(meta);
     }
 
-    // canonical
+    // canonical limpio
     const existingCanonical = document.querySelector('link[rel="canonical"]');
     const canonicalUrl = window.location.origin + location.pathname;
+
     if (existingCanonical) {
       existingCanonical.href = canonicalUrl;
     } else {
