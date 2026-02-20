@@ -26,6 +26,8 @@ const normalizeBaseUrl = (url) => {
 
 const Contact = () => {
   const { language, t } = useLanguage();
+
+  // Base URL del backend (sin / final)
   const BACKEND_URL = useMemo(() => normalizeBaseUrl(RAW_BACKEND_URL), []);
 
   const [formData, setFormData] = useState({
@@ -82,14 +84,14 @@ const Contact = () => {
     const firstErrorField = Object.keys(newErrors)[0];
     if (!firstErrorField) return;
 
-    // 1) intentamos enfocar el input por id (name, email, phone, message)
-    const byId = document.getElementById(firstErrorField);
-    if (byId && typeof byId.focus === 'function') {
-      byId.focus();
+    // Inputs/textarea nativos: coinciden id con keys (name, email, phone, message)
+    const elById = document.getElementById(firstErrorField);
+    if (elById && typeof elById.focus === 'function') {
+      elById.focus();
       return;
     }
 
-    // 2) Radix Select: el trigger tiene id="service"
+    // Radix Select: trigger tiene id="service"
     if (firstErrorField === 'service') {
       const trigger = document.getElementById('service');
       if (trigger && typeof trigger.focus === 'function') trigger.focus();
@@ -106,7 +108,7 @@ const Contact = () => {
       return;
     }
 
-    // Si no hay backend configurado, fallará siempre: mejor avisar claro
+    // Backend no configurado -> no va a enviar nunca
     if (!BACKEND_URL) {
       setFormStatus('error');
       toast({
@@ -146,7 +148,6 @@ const Contact = () => {
         service: '',
         message: ''
       });
-
       setErrors({});
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -173,6 +174,7 @@ const Contact = () => {
         <h2 id="contact-heading" className="section-title">
           {t.contact.title}
         </h2>
+
         <p className="contact-description">{t.contact.description}</p>
 
         <div className="contact-wrapper">
@@ -193,6 +195,7 @@ const Contact = () => {
                   <span>{t.contact.info.email}</span>
                 </a>
               </li>
+
               <li>
                 <a
                   href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`}
@@ -207,12 +210,14 @@ const Contact = () => {
                   <span>{t.contact.info.phone}</span>
                 </a>
               </li>
+
               <li>
                 <div className="contact-info-text">
                   <MapPin className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.location}</span>
                 </div>
               </li>
+
               <li>
                 <a
                   href={`https://${t.contact.info.linkedin}`}
@@ -319,7 +324,7 @@ const Contact = () => {
                 </span>
               </Label>
 
-              {/* Radix Select no es nativo: añadimos input hidden para integraciones y consistencia */}
+              {/* Radix Select no es nativo: añadimos input hidden por consistencia */}
               <input type="hidden" name="service" value={formData.service} />
 
               <Select
