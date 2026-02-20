@@ -15,7 +15,8 @@ export const content = {
     hero: {
       title: 'Jesús Fernández Abeledo',
       subtitle: 'Consultor & Auditor de Accesibilidad Digital | Analista Web',
-      description: 'Profesional con más de 5 años de experiencia en el ámbito digital, especializado en auditoría de accesibilidad web y app. Mi objetivo: crear experiencias digitales inclusivas para todos los usuarios.',
+      description:
+        'Profesional con más de 5 años de experiencia en el ámbito digital, especializado en auditoría de accesibilidad web y app. Mi objetivo: crear experiencias digitales inclusivas para todos los usuarios.',
       cta1: 'Solicitar Auditoría',
       cta2: 'Descargar CV',
       location: 'Pontevedra · Galicia · España'
@@ -33,32 +34,38 @@ export const content = {
       list: [
         {
           title: 'Auditoría de Accesibilidad',
-          description: 'Auditorías completas de sitios web y aplicaciones según normativas WCAG 2.2, EN 301 549 y RD 1112/2018.',
+          description:
+            'Auditorías completas de sitios web y aplicaciones según normativas WCAG 2.2, EN 301 549 y RD 1112/2018.',
           icon: 'ClipboardCheck'
         },
         {
           title: 'Consultoría en Accesibilidad',
-          description: 'Asesoramiento estratégico para integrar la accesibilidad en el ciclo de desarrollo de productos digitales.',
+          description:
+            'Asesoramiento estratégico para integrar la accesibilidad en el ciclo de desarrollo de productos digitales.',
           icon: 'Users'
         },
         {
           title: 'Remediación Técnica',
-          description: 'Implementación de soluciones técnicas para corregir barreras de accesibilidad identificadas.',
+          description:
+            'Implementación de soluciones técnicas para corregir barreras de accesibilidad identificadas.',
           icon: 'Wrench'
         },
         {
           title: 'Analítica Web',
-          description: 'Implementación y optimización de herramientas de analítica (Google Analytics 4, GTM, GA360) para insights accionables.',
+          description:
+            'Implementación y optimización de herramientas de analítica (Google Analytics 4, GTM, GA360) para insights accionables.',
           icon: 'BarChart3'
         },
         {
           title: 'Formación y Capacitación',
-          description: 'Talleres y formación en accesibilidad digital y mejores prácticas WCAG para equipos de desarrollo.',
+          description:
+            'Talleres y formación en accesibilidad digital y mejores prácticas WCAG para equipos de desarrollo.',
           icon: 'GraduationCap'
         },
         {
           title: 'Pruebas con Tecnologías Asistivas',
-          description: 'Evaluación con lectores de pantalla (NVDA, VoiceOver) y otras tecnologías asistivas.',
+          description:
+            'Evaluación con lectores de pantalla (NVDA, VoiceOver) y otras tecnologías asistivas.',
           icon: 'Monitor'
         }
       ]
@@ -117,19 +124,54 @@ export const content = {
       categories: [
         {
           title: 'Herramientas de Accesibilidad',
-          items: ['Wave', 'Web Developer', 'Silktide', 'ANDI', 'Headings Map', 'NVDA', 'VoiceOver', 'axe DevTools', 'Colour Contrast Analyser', 'TalkBack', 'Google Lighthouse']
+          items: [
+            'Wave',
+            'Web Developer',
+            'Silktide',
+            'ANDI',
+            'Headings Map',
+            'NVDA',
+            'VoiceOver',
+            'axe DevTools',
+            'Colour Contrast Analyser',
+            'TalkBack',
+            'Google Lighthouse'
+          ]
         },
         {
           title: 'Normativas y Estándares',
-          items: ['WCAG 2.1', 'WCAG 2.2', 'EN 301 549', 'RD 1112/2018', 'WAI-ARIA', 'Section 508']
+          items: [
+            'WCAG 2.1',
+            'WCAG 2.2',
+            'EN 301 549',
+            'RD 1112/2018',
+            'WAI-ARIA',
+            'Section 508'
+          ]
         },
         {
           title: 'Analítica Digital',
-          items: ['Google Analytics 4', 'Google Analytics 360', 'Google Tag Manager', 'Google Search Console', 'Looker Studio', 'Adobe Analytics', 'Microsoft Clarity', 'Firebase']
+          items: [
+            'Google Analytics 4',
+            'Google Analytics 360',
+            'Google Tag Manager',
+            'Google Search Console',
+            'Looker Studio',
+            'Adobe Analytics',
+            'Microsoft Clarity',
+            'Firebase'
+          ]
         },
         {
           title: 'SEO y Marketing',
-          items: ['Google Ads', 'Semrush', 'Sistrix', 'Screaming Frog', 'SEO Local', 'Google Business Profile']
+          items: [
+            'Google Ads',
+            'Semrush',
+            'Sistrix',
+            'Screaming Frog',
+            'SEO Local',
+            'Google Business Profile'
+          ]
         },
         {
           title: 'Productividad y Colaboración',
@@ -137,27 +179,21 @@ export const content = {
         },
         {
           title: 'Técnicas',
-          items: ['Implementación de Datalayer', 'Etiquetado de eventos', 'Píxeles de conversión', 'Estructuras de bases de datos', 'Remediación técnica HTML/CSS/JS']
+          items: [
+            'Implementación de Datalayer',
+            'Etiquetado de eventos',
+            'Píxeles de conversión',
+            'Estructuras de bases de datos',
+            'Remediación técnica HTML/CSS/JS'
+          ]
         }
       ],
       certifications: {
         title: 'Certificaciones',
         list: [
-          {
-            title: 'Certificado Google Analytics 4',
-            issuer: 'Google Skillshop',
-            year: '2024'
-          },
-          {
-            title: 'Certificado Profesional Análisis de Datos de Google',
-            issuer: 'Coursera – Google',
-            year: '2021'
-          },
-          {
-            title: 'Certificado Profesional de Soporte de TI de Google',
-            issuer: 'Coursera – Google',
-            year: '2021'
-          },
+          { title: 'Certificado Google Analytics 4', issuer: 'Google Skillshop', year: '2024' },
+          { title: 'Certificado Profesional Análisis de Datos de Google', issuer: 'Coursera – Google', year: '2021' },
+          { title: 'Certificado Profesional de Soporte de TI de Google', issuer: 'Coursera – Google', year: '2021' },
           {
             title: 'Técnico Superior en Producción de Audiovisuales, Radio y Espectáculos',
             issuer: 'Cinematography and Film/Video Production',
@@ -168,7 +204,8 @@ export const content = {
     },
     contact: {
       title: 'Contacto',
-      description: 'Interesado en mejorar la accesibilidad de tu sitio web o app? Contáctame para una auditoría o consultoría.',
+      description:
+        'Interesado en mejorar la accesibilidad de tu sitio web o app? Contáctame para una auditoría o consultoría.',
       form: {
         name: 'Nombre completo',
         nameRequired: 'Por favor, introduce tu nombre completo',
@@ -196,14 +233,15 @@ export const content = {
       cta: 'También puedes contactarme directamente por:'
     },
     footer: {
-  copyright: '© 2025 Jesús Fernández Abeledo. Todos los derechos reservados.',
-  wcag: 'Este sitio cumple con WCAG 2.2 Nivel AA',
-  privacy: 'Política de privacidad',
-  legal: 'Aviso legal',
-  accessibility: 'Declaración de accesibilidad',
-  navigation: 'Navegación'
-}
+      copyright: '© 2025 Jesús Fernández Abeledo. Todos los derechos reservados.',
+      wcag: 'Este sitio cumple con WCAG 2.2 Nivel AA',
+      privacy: 'Política de privacidad',
+      legal: 'Aviso legal',
+      accessibility: 'Declaración de accesibilidad',
+      navigation: 'Navegación'
+    }
   },
+
   en: {
     siteTitle: 'Jesús Fernández Abeledo | Digital Accessibility Consultant',
     skipLink: 'Skip to main content',
@@ -220,7 +258,8 @@ export const content = {
     hero: {
       title: 'Jesús Fernández Abeledo',
       subtitle: 'Digital Accessibility Consultant & Auditor | Web Analyst',
-      description: 'Professional with over 5 years of experience in the digital field, specialized in web and app accessibility auditing. My goal: to create inclusive digital experiences for all users.',
+      description:
+        'Professional with over 5 years of experience in the digital field, specialized in web and app accessibility auditing. My goal: to create inclusive digital experiences for all users.',
       cta1: 'Request Audit',
       cta2: 'Download CV',
       location: 'Pontevedra · Galicia · Spain'
@@ -238,12 +277,14 @@ export const content = {
       list: [
         {
           title: 'Accessibility Auditing',
-          description: 'Complete audits of websites and applications according to WCAG 2.2, EN 301 549 and RD 1112/2018 regulations.',
+          description:
+            'Complete audits of websites and applications according to WCAG 2.2, EN 301 549 and RD 1112/2018 regulations.',
           icon: 'ClipboardCheck'
         },
         {
           title: 'Accessibility Consulting',
-          description: 'Strategic consulting to integrate accessibility into the digital product development cycle.',
+          description:
+            'Strategic consulting to integrate accessibility into the digital product development cycle.',
           icon: 'Users'
         },
         {
@@ -253,7 +294,8 @@ export const content = {
         },
         {
           title: 'Web Analytics',
-          description: 'Implementation and optimization of analytics tools (Google Analytics 4, GTM, GA360) for actionable insights.',
+          description:
+            'Implementation and optimization of analytics tools (Google Analytics 4, GTM, GA360) for actionable insights.',
           icon: 'BarChart3'
         },
         {
@@ -322,7 +364,19 @@ export const content = {
       categories: [
         {
           title: 'Accessibility Tools',
-          items: ['Wave', 'Web Developer', 'Silktide', 'ANDI', 'Headings Map', 'NVDA', 'VoiceOver', 'axe DevTools', 'Colour Contrast Analyser', 'TalkBack', 'Google Lighthouse']
+          items: [
+            'Wave',
+            'Web Developer',
+            'Silktide',
+            'ANDI',
+            'Headings Map',
+            'NVDA',
+            'VoiceOver',
+            'axe DevTools',
+            'Colour Contrast Analyser',
+            'TalkBack',
+            'Google Lighthouse'
+          ]
         },
         {
           title: 'Standards & Regulations',
@@ -330,7 +384,16 @@ export const content = {
         },
         {
           title: 'Digital Analytics',
-          items: ['Google Analytics 4', 'Google Analytics 360', 'Google Tag Manager', 'Google Search Console', 'Looker Studio', 'Adobe Analytics', 'Microsoft Clarity', 'Firebase']
+          items: [
+            'Google Analytics 4',
+            'Google Analytics 360',
+            'Google Tag Manager',
+            'Google Search Console',
+            'Looker Studio',
+            'Adobe Analytics',
+            'Microsoft Clarity',
+            'Firebase'
+          ]
         },
         {
           title: 'SEO & Marketing',
@@ -342,27 +405,21 @@ export const content = {
         },
         {
           title: 'Technical Skills',
-          items: ['Datalayer Implementation', 'Event Tagging', 'Conversion Pixels', 'Database Structures', 'Technical Remediation HTML/CSS/JS']
+          items: [
+            'Datalayer Implementation',
+            'Event Tagging',
+            'Conversion Pixels',
+            'Database Structures',
+            'Technical Remediation HTML/CSS/JS'
+          ]
         }
       ],
       certifications: {
         title: 'Certifications',
         list: [
-          {
-            title: 'Google Analytics 4 Certificate',
-            issuer: 'Google Skillshop',
-            year: '2024'
-          },
-          {
-            title: 'Google Data Analytics Professional Certificate',
-            issuer: 'Coursera – Google',
-            year: '2021'
-          },
-          {
-            title: 'Google IT Support Professional Certificate',
-            issuer: 'Coursera – Google',
-            year: '2021'
-          },
+          { title: 'Google Analytics 4 Certificate', issuer: 'Google Skillshop', year: '2024' },
+          { title: 'Google Data Analytics Professional Certificate', issuer: 'Coursera – Google', year: '2021' },
+          { title: 'Google IT Support Professional Certificate', issuer: 'Coursera – Google', year: '2021' },
           {
             title: 'Higher Technician in Audiovisual Production, Radio and Shows',
             issuer: 'Cinematography and Film/Video Production',
@@ -401,13 +458,13 @@ export const content = {
       cta: 'You can also contact me directly via:'
     },
     footer: {
-  copyright: '© 2025 Jesús Fernández Abeledo. All rights reserved.',
-  wcag: 'This site complies with WCAG 2.2 Level AA',
-  privacy: 'Privacy Policy',
-  legal: 'Legal Notice',
-  accessibility: 'Accessibility statement',
-  navigation: 'Navigation'
-}
+      copyright: '© 2025 Jesús Fernández Abeledo. All rights reserved.',
+      wcag: 'This site complies with WCAG 2.2 Level AA',
+      privacy: 'Privacy Policy',
+      legal: 'Legal Notice',
+      accessibility: 'Accessibility statement',
+      navigation: 'Navigation'
+    }
   }
 };
 
@@ -428,4 +485,200 @@ export const serviceOptions = {
     { value: 'training', label: 'Training & Education' },
     { value: 'other', label: 'Other' }
   ]
+};
+
+export const legalPages = {
+  es: {
+    backToHome: 'Volver al inicio',
+    lastUpdated: 'Última actualización',
+
+    legal: {
+      title: 'Aviso legal',
+      sections: [
+        {
+          title: 'Titular del sitio web',
+          content:
+            'Titular: Jesús Fernández Abeledo\n' +
+            'Actividad: Consultoría y auditoría de accesibilidad digital.\n' +
+            'Contacto: s.fernandezabeledo@gmail.com\n' +
+            'Ubicación: Pontevedra, Galicia, España.'
+        },
+        {
+          title: 'Condiciones de uso',
+          content:
+            'El acceso y uso de este sitio web atribuye la condición de usuario e implica la aceptación de las presentes condiciones.\n\n' +
+            'El usuario se compromete a hacer un uso diligente del sitio, de conformidad con la ley, la buena fe y el orden público.'
+        },
+        {
+          title: 'Propiedad intelectual e industrial',
+          content:
+            'Los contenidos de este sitio (textos, marcas, logotipos, diseño y código) están protegidos por la normativa aplicable.\n\n' +
+            'No se permite la reproducción, distribución o comunicación pública sin autorización expresa, salvo en los casos legalmente permitidos.'
+        },
+        {
+          title: 'Limitación de responsabilidad',
+          content:
+            'El titular no se responsabiliza de posibles errores u omisiones en los contenidos, ni de daños derivados del uso del sitio.\n\n' +
+            'El titular podrá modificar y actualizar los contenidos sin previo aviso.'
+        }
+      ]
+    },
+
+    privacy: {
+      title: 'Política de privacidad',
+      sections: [
+        {
+          title: 'Responsable del tratamiento',
+          content:
+            'Responsable: Jesús Fernández Abeledo\n' +
+            'Contacto: s.fernandezabeledo@gmail.com.'
+        },
+        {
+          title: 'Finalidad del tratamiento',
+          content:
+            'Los datos enviados a través del formulario de contacto se tratan para gestionar solicitudes, responder consultas y mantener comunicaciones relacionadas con los servicios solicitados.'
+        },
+        {
+          title: 'Base legal',
+          content:
+            'La base legal para el tratamiento es el consentimiento del usuario al enviar el formulario y/o contactar por los medios proporcionados.'
+        },
+        {
+          title: 'Conservación',
+          content:
+            'Los datos se conservarán durante el tiempo necesario para atender la solicitud y, posteriormente, durante los plazos legalmente exigibles si fuera aplicable.'
+        },
+        {
+          title: 'Derechos',
+          content:
+            'Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad enviando un email a la dirección de contacto.\n\n' +
+            'Si consideras que el tratamiento no se ajusta a la normativa, puedes presentar una reclamación ante la autoridad de control competente.'
+        }
+      ]
+    },
+
+    accessibility: {
+      title: 'Declaración de accesibilidad',
+      sections: [
+        {
+          title: 'Compromiso con la accesibilidad',
+          content:
+            'Este sitio web está diseñado para ser accesible y proporcionar una experiencia inclusiva, alineada con WCAG 2.2 nivel AA.'
+        },
+        {
+          title: 'Estado de conformidad',
+          content:
+            'Este sitio es parcialmente conforme con WCAG 2.2 nivel AA debido a posibles excepciones o mejoras pendientes que se revisan de forma continua.'
+        },
+        {
+          title: 'Preparación de la declaración',
+          content:
+            'Esta declaración fue preparada el 1 de enero de 2025.\n\n' +
+            'La evaluación se ha realizado mediante revisión manual y herramientas de apoyo (por ejemplo, validadores y comprobaciones con teclado y lector de pantalla).'
+        },
+        {
+          title: 'Comentarios y contacto',
+          content:
+            'Si encuentras barreras de accesibilidad o necesitas información en un formato alternativo, contacta en: s.fernandezabeledo@gmail.com.'
+        }
+      ]
+    }
+  },
+
+  en: {
+    backToHome: 'Back to home',
+    lastUpdated: 'Last updated',
+
+    legal: {
+      title: 'Legal notice',
+      sections: [
+        {
+          title: 'Website owner',
+          content:
+            'Owner: Jesús Fernández Abeledo\n' +
+            'Activity: Digital accessibility consulting and auditing.\n' +
+            'Contact: s.fernandezabeledo@gmail.com\n' +
+            'Location: Pontevedra, Galicia, Spain.'
+        },
+        {
+          title: 'Terms of use',
+          content:
+            'Accessing and using this website grants the status of user and implies acceptance of these terms.\n\n' +
+            'Users agree to use the site lawfully, in good faith, and in a way that does not harm third parties.'
+        },
+        {
+          title: 'Intellectual and industrial property',
+          content:
+            'Site contents (texts, trademarks, logos, design, and code) are protected by applicable regulations.\n\n' +
+            'Reproduction, distribution, or public communication is not permitted without express authorization, except where legally allowed.'
+        },
+        {
+          title: 'Limitation of liability',
+          content:
+            'The owner is not liable for errors or omissions in content, or damages resulting from the use of the site.\n\n' +
+            'The owner may modify and update content without prior notice.'
+        }
+      ]
+    },
+
+    privacy: {
+      title: 'Privacy policy',
+      sections: [
+        {
+          title: 'Data controller',
+          content:
+            'Controller: Jesús Fernández Abeledo\n' +
+            'Contact: s.fernandezabeledo@gmail.com.'
+        },
+        {
+          title: 'Purpose',
+          content:
+            'Data submitted through the contact form is processed to manage requests, respond to inquiries, and communicate regarding requested services.'
+        },
+        {
+          title: 'Legal basis',
+          content:
+            'The legal basis is the user’s consent when submitting the form and/or contacting via the provided channels.'
+        },
+        {
+          title: 'Retention',
+          content:
+            'Data will be retained for as long as necessary to handle the request and, where applicable, for any legally required periods.'
+        },
+        {
+          title: 'Your rights',
+          content:
+            'You may exercise your rights of access, rectification, erasure, objection, restriction, and portability by emailing the contact address.\n\n' +
+            'If you believe your data is not being processed in accordance with the law, you may lodge a complaint with the relevant supervisory authority.'
+        }
+      ]
+    },
+
+    accessibility: {
+      title: 'Accessibility statement',
+      sections: [
+        {
+          title: 'Accessibility commitment',
+          content:
+            'This website is designed to be accessible and to provide an inclusive experience aligned with WCAG 2.2 Level AA.'
+        },
+        {
+          title: 'Conformance status',
+          content:
+            'This website is partially conformant with WCAG 2.2 Level AA due to possible exceptions or ongoing improvements.'
+        },
+        {
+          title: 'Statement preparation',
+          content:
+            'This statement was prepared on January 1, 2025.\n\n' +
+            'The assessment was carried out using manual review and supporting tools (for example, validators and keyboard/screen reader checks).'
+        },
+        {
+          title: 'Feedback and contact',
+          content:
+            'If you encounter accessibility barriers or need information in an alternative format, contact: s.fernandezabeledo@gmail.com.'
+        }
+      ]
+    }
+  }
 };
