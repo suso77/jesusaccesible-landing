@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Mail, Phone, MapPin, Linkedin, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from './ui/select';
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// CRA: variables deben empezar por REACT_APP_ y requieren reinicio del dev server
+const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+const normalizeBaseUrl = (url) => {
+  const u = (url ?? '').trim();
+  if (!u) return '';
+  return u.endsWith('/') ? u.slice(0, -1) : u;
+};
 
 const Contact = () => {
   const { language, t } = useLanguage();
+  const BACKEND_URL = useMemo(() => normalizeBaseUrl(RAW_BACKEND_URL), []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,63 +35,85 @@ const Contact = () => {
     service: '',
     message: ''
   });
+
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formStatus, setFormStatus] = useState(null);
 
-  const validateForm = () => {
+  const validateForm = (data) => {
     const newErrors = {};
 
-    // Validar nombre
-    if (!formData.name.trim()) {
-      newErrors.name = t.contact.form.nameRequired;
-    } else if (formData.name.trim().length < 2) {
+    // Nombre
+    if (!data.name.trim() || data.name.trim().length < 2) {
       newErrors.name = t.contact.form.nameRequired;
     }
 
-    // Validar email
-    if (!formData.email.trim()) {
+    // Email
+    if (!data.email.trim()) {
       newErrors.email = t.contact.form.emailRequired;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       newErrors.email = t.contact.form.emailInvalid;
     }
 
-    // Validar teléfono (si se proporciona)
-    if (formData.phone.trim()) {
-      // Validar formato de teléfono internacional
-      const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
-      if (!phoneRegex.test(formData.phone.replace(/\s/g, ''))) {
+    // Teléfono (opcional)
+    if (data.phone.trim()) {
+      const phoneRegex =
+        /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
+      if (!phoneRegex.test(data.phone.replace(/\s/g, ''))) {
         newErrors.phone = t.contact.form.phoneInvalid;
       }
     }
 
-    // Validar servicio
-    if (!formData.service) {
+    // Servicio
+    if (!data.service) {
       newErrors.service = t.contact.form.serviceRequired;
     }
 
-    // Validar mensaje
-    if (!formData.message.trim()) {
-      newErrors.message = t.contact.form.messageRequired;
-    } else if (formData.message.trim().length < 10) {
+    // Mensaje
+    if (!data.message.trim() || data.message.trim().length < 10) {
       newErrors.message = t.contact.form.messageRequired;
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return newErrors;
+  };
+
+  const focusFirstError = (newErrors) => {
+    const firstErrorField = Object.keys(newErrors)[0];
+    if (!firstErrorField) return;
+
+    // 1) intentamos enfocar el input por id (name, email, phone, message)
+    const byId = document.getElementById(firstErrorField);
+    if (byId && typeof byId.focus === 'function') {
+      byId.focus();
+      return;
+    }
+
+    // 2) Radix Select: el trigger tiene id="service"
+    if (firstErrorField === 'service') {
+      const trigger = document.getElementById('service');
+      if (trigger && typeof trigger.focus === 'function') trigger.focus();
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormStatus(null);
 
-    if (!validateForm()) {
-      // Focus on first error
-      const firstErrorField = Object.keys(errors)[0];
-      const errorElement = document.getElementById(firstErrorField);
-      if (errorElement) {
-        errorElement.focus();
-      }
+    const newErrors = validateForm(formData);
+    if (Object.keys(newErrors).length > 0) {
+      focusFirstError(newErrors);
+      return;
+    }
+
+    // Si no hay backend configurado, fallará siempre: mejor avisar claro
+    if (!BACKEND_URL) {
+      setFormStatus('error');
+      toast({
+        title: 'Backend no configurado: REACT_APP_BACKEND_URL',
+        variant: 'destructive'
+      });
+      console.error('Missing REACT_APP_BACKEND_URL env var');
       return;
     }
 
@@ -85,25 +122,23 @@ const Contact = () => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/contact`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
+
+      const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error('Error sending message');
+        console.error('Contact API error:', response.status, payload);
+        throw new Error(payload?.error || payload?.message || `HTTP ${response.status}`);
       }
 
-      const data = await response.json();
-      
       setFormStatus('success');
       toast({
-        title: data.message || t.contact.form.success,
+        title: payload?.message || t.contact.form.success,
         variant: 'default'
       });
-      
-      // Reset form
+
       setFormData({
         name: '',
         email: '',
@@ -111,6 +146,8 @@ const Contact = () => {
         service: '',
         message: ''
       });
+
+      setErrors({});
     } catch (error) {
       console.error('Error submitting form:', error);
       setFormStatus('error');
@@ -124,17 +161,18 @@ const Contact = () => {
   };
 
   const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
+      setErrors((prev) => ({ ...prev, [field]: '' }));
     }
   };
 
   return (
     <section id="contacto" className="section" aria-labelledby="contact-heading">
       <div className="container">
-        <h2 id="contact-heading" className="section-title">{t.contact.title}</h2>
+        <h2 id="contact-heading" className="section-title">
+          {t.contact.title}
+        </h2>
         <p className="contact-description">{t.contact.description}</p>
 
         <div className="contact-wrapper">
@@ -142,24 +180,28 @@ const Contact = () => {
             <h3 className="contact-info-title">{t.contact.cta}</h3>
             <ul className="contact-info-list">
               <li>
-                <a 
-                  href={`mailto:${t.contact.info.email}`} 
+                <a
+                  href={`mailto:${t.contact.info.email}`}
                   className="contact-info-link"
-                  aria-label={language === 'es' 
-                    ? `Correo electrónico: ${t.contact.info.email}` 
-                    : `Email: ${t.contact.info.email}`}
+                  aria-label={
+                    language === 'es'
+                      ? `Correo electrónico: ${t.contact.info.email}`
+                      : `Email: ${t.contact.info.email}`
+                  }
                 >
                   <Mail className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.email}</span>
                 </a>
               </li>
               <li>
-                <a 
-                  href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`} 
+                <a
+                  href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`}
                   className="contact-info-link"
-                  aria-label={language === 'es' 
-                    ? `Teléfono: ${t.contact.info.phone}` 
-                    : `Phone: ${t.contact.info.phone}`}
+                  aria-label={
+                    language === 'es'
+                      ? `Teléfono: ${t.contact.info.phone}`
+                      : `Phone: ${t.contact.info.phone}`
+                  }
                 >
                   <Phone className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.phone}</span>
@@ -172,14 +214,16 @@ const Contact = () => {
                 </div>
               </li>
               <li>
-                <a 
-                  href={`https://${t.contact.info.linkedin}`} 
-                  target="_blank" 
+                <a
+                  href={`https://${t.contact.info.linkedin}`}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="contact-info-link"
-                  aria-label={language === 'es' 
-                    ? 'LinkedIn, se abre en una nueva ventana' 
-                    : 'LinkedIn, opens in a new window'}
+                  aria-label={
+                    language === 'es'
+                      ? 'LinkedIn, se abre en una nueva ventana'
+                      : 'LinkedIn, opens in a new window'
+                  }
                 >
                   <Linkedin className="contact-icon" aria-hidden="true" />
                   <span>LinkedIn</span>
@@ -188,8 +232,8 @@ const Contact = () => {
             </ul>
           </div>
 
-          <form 
-            onSubmit={handleSubmit} 
+          <form
+            onSubmit={handleSubmit}
             className="contact-form"
             noValidate
             aria-label={t.contact.title}
@@ -197,10 +241,13 @@ const Contact = () => {
             <div className="form-group">
               <Label htmlFor="name">
                 {t.contact.form.name}
-                <span className="required" aria-label="required">*</span>
+                <span className="required" aria-label="required">
+                  *
+                </span>
               </Label>
               <Input
                 id="name"
+                name="name"
                 type="text"
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
@@ -208,8 +255,9 @@ const Contact = () => {
                 aria-invalid={!!errors.name}
                 aria-describedby={errors.name ? 'name-error' : undefined}
                 disabled={isSubmitting}
+                autoComplete="name"
               />
-              {errors.name && (
+              {!!errors.name && (
                 <span id="name-error" className="error-message" role="alert">
                   {errors.name}
                 </span>
@@ -219,10 +267,13 @@ const Contact = () => {
             <div className="form-group">
               <Label htmlFor="email">
                 {t.contact.form.email}
-                <span className="required" aria-label="required">*</span>
+                <span className="required" aria-label="required">
+                  *
+                </span>
               </Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleChange('email', e.target.value)}
@@ -230,8 +281,9 @@ const Contact = () => {
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? 'email-error' : undefined}
                 disabled={isSubmitting}
+                autoComplete="email"
               />
-              {errors.email && (
+              {!!errors.email && (
                 <span id="email-error" className="error-message" role="alert">
                   {errors.email}
                 </span>
@@ -242,6 +294,7 @@ const Contact = () => {
               <Label htmlFor="phone">{t.contact.form.phone}</Label>
               <Input
                 id="phone"
+                name="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleChange('phone', e.target.value)}
@@ -249,8 +302,9 @@ const Contact = () => {
                 aria-describedby={errors.phone ? 'phone-error' : undefined}
                 disabled={isSubmitting}
                 placeholder="+34 600 000 000"
+                autoComplete="tel"
               />
-              {errors.phone && (
+              {!!errors.phone && (
                 <span id="phone-error" className="error-message" role="alert">
                   {errors.phone}
                 </span>
@@ -260,14 +314,20 @@ const Contact = () => {
             <div className="form-group">
               <Label htmlFor="service">
                 {t.contact.form.service}
-                <span className="required" aria-label="required">*</span>
+                <span className="required" aria-label="required">
+                  *
+                </span>
               </Label>
+
+              {/* Radix Select no es nativo: añadimos input hidden para integraciones y consistencia */}
+              <input type="hidden" name="service" value={formData.service} />
+
               <Select
                 value={formData.service}
                 onValueChange={(value) => handleChange('service', value)}
                 disabled={isSubmitting}
               >
-                <SelectTrigger 
+                <SelectTrigger
                   id="service"
                   aria-required="true"
                   aria-invalid={!!errors.service}
@@ -283,7 +343,8 @@ const Contact = () => {
                   ))}
                 </SelectContent>
               </Select>
-              {errors.service && (
+
+              {!!errors.service && (
                 <span id="service-error" className="error-message" role="alert">
                   {errors.service}
                 </span>
@@ -293,10 +354,13 @@ const Contact = () => {
             <div className="form-group">
               <Label htmlFor="message">
                 {t.contact.form.message}
-                <span className="required" aria-label="required">*</span>
+                <span className="required" aria-label="required">
+                  *
+                </span>
               </Label>
               <Textarea
                 id="message"
+                name="message"
                 rows={6}
                 value={formData.message}
                 onChange={(e) => handleChange('message', e.target.value)}
@@ -305,7 +369,7 @@ const Contact = () => {
                 aria-describedby={errors.message ? 'message-error' : undefined}
                 disabled={isSubmitting}
               />
-              {errors.message && (
+              {!!errors.message && (
                 <span id="message-error" className="error-message" role="alert">
                   {errors.message}
                 </span>
