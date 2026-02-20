@@ -400,12 +400,13 @@ export const content = {
       cta: 'You can also contact me directly via:'
     },
     footer: {
-      copyright: '© 2025 Jesús Fernández Abeledo. All rights reserved.',
-      wcag: 'This site complies with WCAG 2.2 Level AA',
-      privacy: 'Privacy Policy',
-      legal: 'Legal Notice',
-      navigation: 'Navigation'
-    }
+  copyright: '© 2025 Jesús Fernández Abeledo. Todos los derechos reservados.',
+  wcag: 'Este sitio cumple con WCAG 2.2 Nivel AA',
+  privacy: 'Política de privacidad',
+  legal: 'Aviso legal',
+  accessibility: 'Declaración de accesibilidad',
+  navigation: 'Navegación'
+   }
   }
 };
 
