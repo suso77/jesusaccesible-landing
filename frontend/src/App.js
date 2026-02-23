@@ -8,13 +8,13 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Services from "./components/Services";
-import Experience from "./components/Experience";
-import Skills from "./components/Skills";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 // Lazy load components that are not needed for initial paint
 const LegalPage = React.lazy(() => import("./components/LegalPage"));
+const Experience = React.lazy(() => import("./components/Experience"));
+const Skills = React.lazy(() => import("./components/Skills"));
+const Contact = React.lazy(() => import("./components/Contact"));
 
 const MainLayout = () => {
   const location = useLocation();
@@ -93,12 +93,14 @@ const MainLayout = () => {
         const element = document.querySelector(scrollTarget);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
-          // Focus on name input if navigating to contact
+          // Focus on name input if navigating to contact - use requestAnimationFrame to avoid thrashing
           if (scrollTarget === '#contacto') {
-            setTimeout(() => {
-              const nameInput = document.querySelector('#name');
-              if (nameInput) nameInput.focus();
-            }, 800);
+            requestAnimationFrame(() => {
+              const timer2 = setTimeout(() => {
+                const nameInput = document.querySelector('#name');
+                if (nameInput) nameInput.focus({ preventScroll: true });
+              }, 1000); // Slightly more delay to ensure scroll is done
+            });
           }
         }
       }, 150);
@@ -114,9 +116,11 @@ const MainLayout = () => {
         <Hero />
         <About />
         <Services />
-        <Experience />
-        <Skills />
-        <Contact />
+        <React.Suspense fallback={<div className="min-h-[400px]" />}>
+          <Experience />
+          <Skills />
+          <Contact />
+        </React.Suspense>
       </main>
       <Footer />
       <Toaster />
