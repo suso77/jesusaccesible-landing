@@ -14,14 +14,6 @@ const Hero = () => {
     const contactSection = document.querySelector('#contacto');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-      
-      // Focus on the first form field (name input) after scroll
-      setTimeout(() => {
-        const nameInput = document.querySelector('#name');
-        if (nameInput) {
-          nameInput.focus();
-        }
-      }, prefersReducedMotion ? 100 : 800);
     }
   };
 
@@ -29,7 +21,7 @@ const Hero = () => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/download-cv`);
       if (!response.ok) throw new Error('Failed to download CV');
-      
+
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -53,14 +45,14 @@ const Hero = () => {
           <p className="hero-subtitle">{t.hero.subtitle}</p>
           <p className="hero-location">{t.hero.location}</p>
           <p className="hero-description">{t.hero.description}</p>
-          
+
           <div className="hero-cta">
             <Button
               size="lg"
               onClick={handleContactClick}
               className="cta-primary"
-              aria-label={language === 'es' 
-                ? 'Solicitar auditoría, ir al formulario de contacto' 
+              aria-label={language === 'es'
+                ? 'Solicitar auditoría, ir al formulario de contacto'
                 : 'Request audit, go to contact form'}
             >
               <Mail className="button-icon" aria-hidden="true" />
@@ -71,8 +63,8 @@ const Hero = () => {
               variant="outline"
               onClick={handleDownloadCV}
               className="cta-secondary"
-              aria-label={language === 'es' 
-                ? 'Descargar CV en formato PDF' 
+              aria-label={language === 'es'
+                ? 'Descargar CV en formato PDF'
                 : 'Download CV in PDF format'}
             >
               <Download className="button-icon" aria-hidden="true" />

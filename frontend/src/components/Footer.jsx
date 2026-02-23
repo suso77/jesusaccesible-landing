@@ -38,15 +38,6 @@ const Footer = () => {
       const element = document.querySelector(href);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
-        // If navigating to contact section, focus on name input - use requestAnimationFrame to avoid thrashing
-        if (href === '#contacto') {
-          requestAnimationFrame(() => {
-            const timer = setTimeout(() => {
-              const nameInput = document.querySelector('#name');
-              if (nameInput) nameInput.focus({ preventScroll: true });
-            }, 1000);
-          });
-        }
       }
     }
   };

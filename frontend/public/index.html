@@ -157,14 +157,7 @@
     <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.svg" />
     <script>window.addEventListener("error", function (e) { if (e.error instanceof DOMException && e.error.name === "DataCloneError" && e.message && e.message.includes("PerformanceServerTiming")) { e.stopImmediatePropagation(); e.preventDefault() } }, true);</script>
-    <script>
-        window.addEventListener('load', function () {
-            var script = document.createElement('script');
-            script.src = "https://assets.emergent.sh/scripts/emergent-main.js";
-            script.setAttribute('defer', '');
-            document.body.appendChild(script);
-        });
-    </script>
+    <script src="https://assets.emergent.sh/scripts/emergent-main.js" defer></script>
     <!--
         These two scripts have been added for the Visual Edits, please do not edit or remove them
         -->

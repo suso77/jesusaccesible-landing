@@ -8,13 +8,13 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Services from "./components/Services";
+import Experience from "./components/Experience";
+import Skills from "./components/Skills";
+import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
-// Lazy load components below the fold for better initial TTI and reduced unused JS
+// Lazy load components that are not needed for initial paint (Legal pages are perfect for this)
 const LegalPage = React.lazy(() => import("./components/LegalPage"));
-const Experience = React.lazy(() => import("./components/Experience"));
-const Skills = React.lazy(() => import("./components/Skills"));
-const Contact = React.lazy(() => import("./components/Contact"));
 
 const MainLayout = () => {
   const location = useLocation();
@@ -116,11 +116,9 @@ const MainLayout = () => {
         <Hero />
         <About />
         <Services />
-        <React.Suspense fallback={<div className="min-h-[200px]" />}>
-          <Experience />
-          <Skills />
-          <Contact />
-        </React.Suspense>
+        <Experience />
+        <Skills />
+        <Contact />
       </main>
       <Footer />
       <Toaster />

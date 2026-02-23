@@ -37,15 +37,6 @@ const Header = () => {
       const element = document.querySelector(href);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
-        // If navigating to contact section, focus on name input - use requestAnimationFrame to avoid thrashing
-        if (href === '#contacto') {
-          requestAnimationFrame(() => {
-            const timer = setTimeout(() => {
-              const nameInput = document.querySelector('#name');
-              if (nameInput) nameInput.focus({ preventScroll: true });
-            }, 1000);
-          });
-        }
       }
     }
   };
@@ -56,10 +47,6 @@ const Header = () => {
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
-    // Return focus to menu button when closing
-    setTimeout(() => {
-      menuButtonRef.current?.focus();
-    }, 100);
   };
 
   // Handle escape key
