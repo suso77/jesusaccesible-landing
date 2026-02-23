@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Mail, Phone, MapPin, Linkedin, Send } from 'lucide-react';
 import { Button } from './ui/button';
@@ -15,7 +15,7 @@ import {
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Contact = () => {
   const { language, t } = useLanguage();
@@ -30,6 +30,27 @@ const Contact = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Determine the effective backend URL based on environment
+  // This memoised value ensures consistency and handles mobile testing local IPs
+  const BACKEND_URL = useMemo(() => {
+    let url = (RAW_BACKEND_URL || '').trim().replace(/\/$/, '');
+    const { hostname, protocol } = window.location;
+
+    // Auto-discovery logic (essential for testing on mobile via local network)
+    if (!url) {
+      // If no environment variable, assume port 8000 on the current host in dev
+      const devEnvironments = ['localhost', '127.0.0.1', '192.168.', '10.', '172.'];
+      const isDev = devEnvironments.some(prefix => hostname.includes(prefix));
+      url = isDev ? `${protocol}//${hostname}:8000` : window.location.origin;
+    } else {
+      // If variable exists, ensure it uses the current device's hostname instead of 'localhost'
+      url = url.replace('localhost', hostname).replace('127.0.0.1', hostname);
+    }
+
+    console.log('[DEBUG] Backend URL resolved to:', url);
+    return url;
+  }, []);
 
   const validateForm = (data) => {
     const newErrors = {};
@@ -72,31 +93,31 @@ const Contact = () => {
       return;
     }
 
-    const hostUrl = BACKEND_URL.replace(/\/$/, '') || window.location.origin;
-    const apiUrl = `${hostUrl}/api/contact`;
-
     setIsSubmitting(true);
     try {
+      const apiUrl = `${BACKEND_URL}/api/contact`;
+
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
+        mode: 'cors' // Explicitly set CORS mode
       });
 
       const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(payload?.message || (language === 'es' ? 'Error en el servidor' : 'Server error'));
+        throw new Error(payload?.detail || payload?.message || (language === 'es' ? 'Error en el servidor' : 'Server error'));
       }
 
       toast({ title: t.contact.form.success });
       setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
     } catch (error) {
-      console.error('Submission error:', error);
+      console.error('[CRITICAL] Form submission failed:', error);
       toast({
         title: t.contact.form.error,
         description: error.message || (language === 'es' ? 'Error de conexión' : 'Connection error'),
@@ -148,19 +169,42 @@ const Contact = () => {
           <form onSubmit={handleSubmit} className="contact-form" noValidate>
             <div className="form-group">
               <Label htmlFor="name">{t.contact.form.name} <span className="required">*</span></Label>
-              <Input id="name" value={formData.name} onChange={(e) => handleChange('name', e.target.value)} aria-invalid={!!errors.name} disabled={isSubmitting} />
+              <Input
+                id="name"
+                value={formData.name}
+                onChange={(e) => handleChange('name', e.target.value)}
+                aria-invalid={!!errors.name}
+                disabled={isSubmitting}
+                autoComplete="name"
+              />
               {!!errors.name && <span className="error-message">{errors.name}</span>}
             </div>
 
             <div className="form-group">
               <Label htmlFor="email">{t.contact.form.email} <span className="required">*</span></Label>
-              <Input id="email" type="email" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} aria-invalid={!!errors.email} disabled={isSubmitting} />
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleChange('email', e.target.value)}
+                aria-invalid={!!errors.email}
+                disabled={isSubmitting}
+                autoComplete="email"
+              />
               {!!errors.email && <span className="error-message">{errors.email}</span>}
             </div>
 
             <div className="form-group">
               <Label htmlFor="phone">{t.contact.form.phone}</Label>
-              <Input id="phone" type="tel" value={formData.phone} onChange={(e) => handleChange('phone', e.target.value)} disabled={isSubmitting} placeholder="+34 600 000 000" />
+              <Input
+                id="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => handleChange('phone', e.target.value)}
+                disabled={isSubmitting}
+                placeholder="+34 600 000 000"
+                autoComplete="tel"
+              />
             </div>
 
             <div className="form-group">
@@ -180,7 +224,14 @@ const Contact = () => {
 
             <div className="form-group">
               <Label htmlFor="message">{t.contact.form.message} <span className="required">*</span></Label>
-              <Textarea id="message" rows={6} value={formData.message} onChange={(e) => handleChange('message', e.target.value)} aria-invalid={!!errors.message} disabled={isSubmitting} />
+              <Textarea
+                id="message"
+                rows={6}
+                value={formData.message}
+                onChange={(e) => handleChange('message', e.target.value)}
+                aria-invalid={!!errors.message}
+                disabled={isSubmitting}
+              />
               {!!errors.message && <span className="error-message">{errors.message}</span>}
             </div>
 
