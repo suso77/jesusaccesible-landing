@@ -126,9 +126,6 @@ const Contact = () => {
           'Accept': 'application/json'
         },
         body: JSON.stringify(formData)
-      }).catch(err => {
-        console.error('Fetch network error:', err);
-        throw new Error(language === 'es' ? 'Error de red. ¿Está el servidor encendido?' : 'Network error. Is the server running?');
       });
 
       let payload = {};

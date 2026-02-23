@@ -4,9 +4,6 @@ import { Button } from './ui/button';
 import { Download, Mail } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
-const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const BACKEND_URL = (RAW_BACKEND_URL || '').replace(/\/$/, '');
-
 const Hero = () => {
   const { language, t } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
@@ -39,6 +36,7 @@ const Hero = () => {
               <Mail className="button-icon" aria-hidden="true" />
               {t.hero.cta1}
             </Button>
+
             <a
               href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
               download="CV_Accesibilidad_Jesus_Fernandez.pdf"

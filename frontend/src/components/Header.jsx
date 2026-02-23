@@ -30,7 +30,6 @@ const Header = () => {
     setMobileMenuOpen(false);
 
     if (isLegalPage) {
-      // Navigate to home via React Router passing the target section as state
       const homePath = language === 'es' ? '/' : '/en';
       navigate(homePath, { state: { scrollTo: href } });
     } else {
