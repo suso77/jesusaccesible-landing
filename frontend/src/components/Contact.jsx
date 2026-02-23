@@ -75,7 +75,9 @@ const Contact = () => {
       elById.focus();
     } else if (firstErrorField === 'service') {
       const trigger = document.getElementById('service');
-      if (trigger && typeof trigger.focus === 'function') trigger.focus();
+      if (trigger && typeof trigger.focus === 'function') {
+        trigger.focus();
+      }
     }
   };
 
@@ -92,8 +94,8 @@ const Contact = () => {
     if (!BACKEND_URL) {
       setFormStatus('error');
       toast({
-        title: 'Backend no configurado',
-        description: 'Falta la variable REACT_APP_BACKEND_URL.',
+        title: 'Error de configuración',
+        description: 'Falta la variable de entorno REACT_APP_BACKEND_URL.',
         variant: 'destructive'
       });
       return;
