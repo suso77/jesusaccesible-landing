@@ -3,7 +3,6 @@ import { useLanguage } from '../context/LanguageContext';
 import { Button } from './ui/button';
 import { Download, Mail } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { getBackendUrl } from '../utils/api';
 
 const Hero = () => {
   const { language, t } = useLanguage();
@@ -16,12 +15,8 @@ const Hero = () => {
     }
   };
 
-  // Re-enable backend CV endpoint
-  // This is better for mobile as the backend sets Content-Disposition: attachment
-  const cvDownloadUrl = useMemo(() => {
-    const backendUrl = getBackendUrl();
-    return `${backendUrl}/api/download-cv`;
-  }, []);
+  // Direct link to the public static file is the most reliable method for simple downloads
+  const cvDownloadUrl = "/CV_Accesibilidad_Jesus_Fernandez.pdf";
 
   return (
     <section id="hero" className="hero" aria-label={t.hero.title}>

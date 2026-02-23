@@ -1,11 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import Logo from './Logo';
-import { getBackendUrl } from '../utils/api';
 
 const Header = () => {
   const { language, switchLanguage, t } = useLanguage();
@@ -49,11 +48,8 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  // Re-enable backend CV endpoint for better mobile support (force download headers)
-  const cvDownloadUrl = useMemo(() => {
-    const backendUrl = getBackendUrl();
-    return `${backendUrl}/api/download-cv`;
-  }, []);
+  // Direct link to the public static file
+  const cvDownloadUrl = "/CV_Accesibilidad_Jesus_Fernandez.pdf";
 
   return (
     <header className="header" role="banner">
@@ -153,7 +149,7 @@ const Header = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mobile-nav-link download-cv-link"
-                    // Removed immediate closeMobileMenu as it can block Safari downloads
+                    onClick={closeMobileMenu}
                     role="menuitem"
                     aria-label={language === 'es'
                       ? 'Descargar CV en formato PDF'
