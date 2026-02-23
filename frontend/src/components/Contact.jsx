@@ -117,6 +117,8 @@ const Contact = () => {
     setIsSubmitting(true);
     try {
       const url = `${effectiveBackendUrl}/api/contact`;
+      console.log('Sending request to:', url);
+
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -124,10 +126,22 @@ const Contact = () => {
           'Accept': 'application/json'
         },
         body: JSON.stringify(formData)
+      }).catch(err => {
+        console.error('Fetch network error:', err);
+        throw new Error(language === 'es' ? 'Error de red. ¿Está el servidor encendido?' : 'Network error. Is the server running?');
       });
 
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload?.message || 'Error en envío');
+      let payload = {};
+      try {
+        payload = await response.json();
+      } catch (e) {
+        console.error('Invalid JSON response');
+      }
+
+      if (!response.ok) {
+        console.error('Response NOT OK:', response.status, payload);
+        throw new Error(payload?.message || (language === 'es' ? 'Error en el servidor' : 'Server error'));
+      }
 
       setFormStatus('success');
       toast({ title: t.contact.form.success });
