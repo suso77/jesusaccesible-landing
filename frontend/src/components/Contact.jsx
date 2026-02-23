@@ -15,6 +15,7 @@ import {
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
 
+// CRA: las variables deben empezar por REACT_APP_
 const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const normalizeBaseUrl = (url) => {
@@ -72,14 +73,9 @@ const Contact = () => {
     const elById = document.getElementById(firstErrorField);
     if (elById && typeof elById.focus === 'function') {
       elById.focus();
-      return;
-    }
-
-    if (firstErrorField === 'service') {
+    } else if (firstErrorField === 'service') {
       const trigger = document.getElementById('service');
-      if (trigger && typeof trigger.focus === 'function') {
-        trigger.focus();
-      }
+      if (trigger && typeof trigger.focus === 'function') trigger.focus();
     }
   };
 
@@ -112,7 +108,7 @@ const Contact = () => {
       });
 
       const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload?.message || 'Error');
+      if (!response.ok) throw new Error(payload?.message || 'Error en envío');
 
       setFormStatus('success');
       toast({ title: t.contact.form.success });
@@ -205,7 +201,9 @@ const Contact = () => {
             </div>
 
             <Button type="submit" size="lg" disabled={isSubmitting} className="submit-button">
-              {isSubmitting ? <span>{t.contact.form.sending}</span> : (
+              {isSubmitting ? (
+                <span>{t.contact.form.sending}</span>
+              ) : (
                 <>
                   <Send className="button-icon" /> {t.contact.form.submit}
                 </>
