@@ -27,7 +27,8 @@ async function prerender() {
     app.use(express.static(APP_ROOT));
 
     // Servir el index.html para todas las rutas durante el proceso de prerender
-    app.get('*', (req, res) => {
+    // En Express 5, el wildcard '*' debe escribirse como '(.*)'
+    app.get('(.*)', (req, res) => {
         res.sendFile(path.join(APP_ROOT, 'index.html'));
     });
 
