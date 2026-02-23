@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import Logo from './Logo';
+import { getBackendUrl } from '../utils/api';
 
 const Header = () => {
   const { language, switchLanguage, t } = useLanguage();
@@ -47,6 +48,12 @@ const Header = () => {
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
   };
+
+  // Dynamic CV download URL for mobile menu
+  const cvDownloadUrl = useMemo(() => {
+    const backendUrl = getBackendUrl();
+    return `${backendUrl}/api/download-cv`;
+  }, []);
 
   return (
     <header className="header" role="banner">
@@ -141,7 +148,7 @@ const Header = () => {
                 ))}
                 <li role="none" className="mobile-nav-cv">
                   <a
-                    href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
+                    href={cvDownloadUrl}
                     download="CV_Accesibilidad_Jesus_Fernandez.pdf"
                     target="_blank"
                     rel="noopener noreferrer"

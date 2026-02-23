@@ -14,8 +14,7 @@ import {
 } from './ui/select';
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
-
-const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+import { getBackendUrl } from '../utils/api';
 
 const Contact = () => {
   const { language, t } = useLanguage();
@@ -31,26 +30,8 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Determine the effective backend URL based on environment
-  // This memoised value ensures consistency and handles mobile testing local IPs
-  const BACKEND_URL = useMemo(() => {
-    let url = (RAW_BACKEND_URL || '').trim().replace(/\/$/, '');
-    const { hostname, protocol } = window.location;
-
-    // Auto-discovery logic (essential for testing on mobile via local network)
-    if (!url) {
-      // If no environment variable, assume port 8000 on the current host in dev
-      const devEnvironments = ['localhost', '127.0.0.1', '192.168.', '10.', '172.'];
-      const isDev = devEnvironments.some(prefix => hostname.includes(prefix));
-      url = isDev ? `${protocol}//${hostname}:8000` : window.location.origin;
-    } else {
-      // If variable exists, ensure it uses the current device's hostname instead of 'localhost'
-      url = url.replace('localhost', hostname).replace('127.0.0.1', hostname);
-    }
-
-    console.log('[DEBUG] Backend URL resolved to:', url);
-    return url;
-  }, []);
+  // Use shared utility for backend URL
+  const BACKEND_URL = useMemo(() => getBackendUrl(), []);
 
   const validateForm = (data) => {
     const newErrors = {};
@@ -96,6 +77,7 @@ const Contact = () => {
     setIsSubmitting(true);
     try {
       const apiUrl = `${BACKEND_URL}/api/contact`;
+      console.log('[DEBUG] Posting to:', apiUrl);
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -104,7 +86,7 @@ const Contact = () => {
           'Accept': 'application/json'
         },
         body: JSON.stringify(formData),
-        mode: 'cors' // Explicitly set CORS mode
+        mode: 'cors'
       });
 
       const payload = await response.json().catch(() => ({}));

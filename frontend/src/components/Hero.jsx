@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Button } from './ui/button';
 import { Download, Mail } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { getBackendUrl } from '../utils/api';
 
 const Hero = () => {
   const { language, t } = useLanguage();
@@ -14,6 +15,13 @@ const Hero = () => {
       contactSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
   };
+
+  // Determine the CV download URL dynamically
+  // Using the backend endpoint is much more reliable on mobile devices
+  const cvDownloadUrl = useMemo(() => {
+    const backendUrl = getBackendUrl();
+    return `${backendUrl}/api/download-cv`;
+  }, []);
 
   return (
     <section id="hero" className="hero" aria-label={t.hero.title}>
@@ -38,7 +46,7 @@ const Hero = () => {
             </Button>
 
             <a
-              href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
+              href={cvDownloadUrl}
               download="CV_Accesibilidad_Jesus_Fernandez.pdf"
               target="_blank"
               rel="noopener noreferrer"
