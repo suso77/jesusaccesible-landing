@@ -15,7 +15,6 @@ import {
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
 
-// CRA: variables deben empezar por REACT_APP_ y requieren reinicio del dev server
 const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const normalizeBaseUrl = (url) => {
@@ -26,8 +25,6 @@ const normalizeBaseUrl = (url) => {
 
 const Contact = () => {
   const { language, t } = useLanguage();
-
-  // Base URL del backend (sin / final)
   const BACKEND_URL = useMemo(() => normalizeBaseUrl(RAW_BACKEND_URL), []);
 
   const [formData, setFormData] = useState({
@@ -44,32 +41,26 @@ const Contact = () => {
 
   const validateForm = (data) => {
     const newErrors = {};
-
     if (!data.name.trim() || data.name.trim().length < 2) {
       newErrors.name = t.contact.form.nameRequired;
     }
-
     if (!data.email.trim()) {
       newErrors.email = t.contact.form.emailRequired;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       newErrors.email = t.contact.form.emailInvalid;
     }
-
     if (data.phone.trim()) {
       const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
       if (!phoneRegex.test(data.phone.replace(/\s/g, ''))) {
         newErrors.phone = t.contact.form.phoneInvalid;
       }
     }
-
     if (!data.service) {
       newErrors.service = t.contact.form.serviceRequired;
     }
-
     if (!data.message.trim() || data.message.trim().length < 10) {
       newErrors.message = t.contact.form.messageRequired;
     }
-
     setErrors(newErrors);
     return newErrors;
   };
@@ -78,14 +69,12 @@ const Contact = () => {
     const firstErrorField = Object.keys(newErrors)[0];
     if (!firstErrorField) return;
 
-    // 1) Intentamos enfocar inputs nativos (ID coincide con el nombre del campo)
     const elById = document.getElementById(firstErrorField);
     if (elById && typeof elById.focus === 'function') {
       elById.focus();
       return;
     }
 
-    // 2) Radix Select específico
     if (firstErrorField === 'service') {
       const trigger = document.getElementById('service');
       if (trigger && typeof trigger.focus === 'function') {
@@ -108,14 +97,13 @@ const Contact = () => {
       setFormStatus('error');
       toast({
         title: 'Backend no configurado',
-        description: 'Falta la variable REACT_APP_BACKEND_URL en el entorno.',
+        description: 'Falta la variable REACT_APP_BACKEND_URL.',
         variant: 'destructive'
       });
       return;
     }
 
     setIsSubmitting(true);
-
     try {
       const response = await fetch(`${BACKEND_URL}/api/contact`, {
         method: 'POST',
@@ -124,17 +112,10 @@ const Contact = () => {
       });
 
       const payload = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(payload?.error || payload?.message || `HTTP ${response.status}`);
-      }
+      if (!response.ok) throw new Error(payload?.message || 'Error');
 
       setFormStatus('success');
-      toast({
-        title: payload?.message || t.contact.form.success,
-        variant: 'default'
-      });
-
+      toast({ title: t.contact.form.success });
       setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
     } catch (error) {
@@ -147,9 +128,7 @@ const Contact = () => {
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: '' }));
-    }
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: '' }));
   };
 
   return (
@@ -228,8 +207,7 @@ const Contact = () => {
             <Button type="submit" size="lg" disabled={isSubmitting} className="submit-button">
               {isSubmitting ? <span>{t.contact.form.sending}</span> : (
                 <>
-                  <Send className="button-icon" />
-                  {t.contact.form.submit}
+                  <Send className="button-icon" /> {t.contact.form.submit}
                 </>
               )}
             </Button>
