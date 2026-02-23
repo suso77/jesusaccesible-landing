@@ -42,7 +42,7 @@ const Hero = () => {
       <div className="container">
         <div className="hero-content">
           <h1 className="hero-title">{t.hero.title}</h1>
-          <p className="hero-subtitle">{t.hero.subtitle}</p>
+          <h2 className="hero-subtitle">{t.hero.subtitle}</h2>
           <p className="hero-location">{t.hero.location}</p>
           <p className="hero-description">{t.hero.description}</p>
 
