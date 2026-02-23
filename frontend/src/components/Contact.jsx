@@ -30,7 +30,7 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Determine the effective backend URL using our shared utility
+  // Use shared utility for backend URL
   const BACKEND_URL = useMemo(() => getBackendUrl(), []);
 
   const validateForm = (data) => {
@@ -43,13 +43,15 @@ const Contact = () => {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       newErrors.email = t.contact.form.emailInvalid;
     }
+
+    // Improved phone validation: allow optional + and common separators
     if (data.phone.trim()) {
-      // Basic phone check
       const phoneDigits = data.phone.replace(/\D/g, '');
       if (phoneDigits && phoneDigits.length < 9) {
         newErrors.phone = t.contact.form.phoneInvalid;
       }
     }
+
     if (!data.service) {
       newErrors.service = t.contact.form.serviceRequired;
     }
@@ -67,18 +69,21 @@ const Contact = () => {
     if (Object.keys(newErrors).length > 0) {
       toast({
         title: language === 'es' ? 'Error en el formulario' : 'Form error',
-        description: language === 'es'
-          ? 'Por favor, revisa los errores en el formulario.'
-          : 'Please review the errors in the form.',
+        description: language === 'es' ? 'Revisa los campos marcados.' : 'Check the highlighted fields.',
         variant: 'destructive'
       });
       return;
     }
 
     setIsSubmitting(true);
+
     try {
       const apiUrl = `${BACKEND_URL}/api/contact`;
-      console.log('[DEBUG] Form submission to:', apiUrl);
+      console.log('[DEBUG] Attempting contact submission to:', apiUrl);
+
+      // We use a timeout to detect when the backend is completely unreachable
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -87,23 +92,37 @@ const Contact = () => {
           'Accept': 'application/json'
         },
         body: JSON.stringify(formData),
-        mode: 'cors'
+        mode: 'cors',
+        signal: controller.signal
       });
 
+      clearTimeout(timeoutId);
       const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(payload?.detail || payload?.message || (language === 'es' ? 'Error en el servidor' : 'Server error'));
+        throw new Error(payload?.detail || payload?.message || 'Error en servidor');
       }
 
       toast({ title: t.contact.form.success });
       setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
     } catch (error) {
-      console.error('[CRITICAL] Contact form error:', error);
+      console.error('[CRITICAL] Contact form submission failed:', error);
+
+      let errorMessage = error.message;
+      if (error.name === 'AbortError') {
+        errorMessage = language === 'es'
+          ? 'El servidor no responde (Timeout). Asegúrate de que el backend esté corriendo.'
+          : 'Server timeout. Ensure the backend is running.';
+      } else if (error.message.includes('Failed to fetch')) {
+        errorMessage = language === 'es'
+          ? `No se puede conectar con el backend (${BACKEND_URL}). Verifica la red local y que el servidor use --host 0.0.0.0`
+          : `Cannot connect to backend (${BACKEND_URL}). Check local network and --host 0.0.0.0`;
+      }
+
       toast({
         title: t.contact.form.error,
-        description: error.message || (language === 'es' ? 'Error de conexión' : 'Connection error'),
+        description: errorMessage,
         variant: 'destructive'
       });
     } finally {
