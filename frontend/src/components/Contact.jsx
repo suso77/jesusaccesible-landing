@@ -45,19 +45,16 @@ const Contact = () => {
   const validateForm = (data) => {
     const newErrors = {};
 
-    // Nombre
     if (!data.name.trim() || data.name.trim().length < 2) {
       newErrors.name = t.contact.form.nameRequired;
     }
 
-    // Email
     if (!data.email.trim()) {
       newErrors.email = t.contact.form.emailRequired;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       newErrors.email = t.contact.form.emailInvalid;
     }
 
-    // Teléfono (opcional)
     if (data.phone.trim()) {
       const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
       if (!phoneRegex.test(data.phone.replace(/\s/g, ''))) {
@@ -65,12 +62,10 @@ const Contact = () => {
       }
     }
 
-    // Servicio
     if (!data.service) {
       newErrors.service = t.contact.form.serviceRequired;
     }
 
-    // Mensaje
     if (!data.message.trim() || data.message.trim().length < 10) {
       newErrors.message = t.contact.form.messageRequired;
     }
@@ -83,14 +78,14 @@ const Contact = () => {
     const firstErrorField = Object.keys(newErrors)[0];
     if (!firstErrorField) return;
 
-    // 1) Inputs/textarea nativos
+    // 1) Intentamos enfocar inputs nativos (ID coincide con el nombre del campo)
     const elById = document.getElementById(firstErrorField);
     if (elById && typeof elById.focus === 'function') {
       elById.focus();
       return;
     }
 
-    // 2) Radix Select: trigger tiene id="service"
+    // 2) Radix Select específico
     if (firstErrorField === 'service') {
       const trigger = document.getElementById('service');
       if (trigger && typeof trigger.focus === 'function') {
@@ -140,21 +135,11 @@ const Contact = () => {
         variant: 'default'
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        message: ''
-      });
+      setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
     } catch (error) {
-      console.error('Error submitting form:', error);
       setFormStatus('error');
-      toast({
-        title: t.contact.form.error,
-        variant: 'destructive'
-      });
+      toast({ title: t.contact.form.error, variant: 'destructive' });
     } finally {
       setIsSubmitting(false);
     }
@@ -170,10 +155,7 @@ const Contact = () => {
   return (
     <section id="contacto" className="section" aria-labelledby="contact-heading">
       <div className="container">
-        <h2 id="contact-heading" className="section-title">
-          {t.contact.title}
-        </h2>
-
+        <h2 id="contact-heading" className="section-title">{t.contact.title}</h2>
         <p className="contact-description">{t.contact.description}</p>
 
         <div className="contact-wrapper">
@@ -182,26 +164,22 @@ const Contact = () => {
             <ul className="contact-info-list">
               <li>
                 <a href={`mailto:${t.contact.info.email}`} className="contact-info-link">
-                  <Mail className="contact-icon" aria-hidden="true" />
-                  <span>{t.contact.info.email}</span>
+                  <Mail className="contact-icon" /> <span>{t.contact.info.email}</span>
                 </a>
               </li>
               <li>
                 <a href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`} className="contact-info-link">
-                  <Phone className="contact-icon" aria-hidden="true" />
-                  <span>{t.contact.info.phone}</span>
+                  <Phone className="contact-icon" /> <span>{t.contact.info.phone}</span>
                 </a>
               </li>
               <li>
                 <div className="contact-info-text">
-                  <MapPin className="contact-icon" aria-hidden="true" />
-                  <span>{t.contact.info.location}</span>
+                  <MapPin className="contact-icon" /> <span>{t.contact.info.location}</span>
                 </div>
               </li>
               <li>
                 <a href={`https://${t.contact.info.linkedin}`} target="_blank" rel="noopener noreferrer" className="contact-info-link">
-                  <Linkedin className="contact-icon" aria-hidden="true" />
-                  <span>LinkedIn</span>
+                  <Linkedin className="contact-icon" /> <span>LinkedIn</span>
                 </a>
               </li>
             </ul>
@@ -210,39 +188,19 @@ const Contact = () => {
           <form onSubmit={handleSubmit} className="contact-form" noValidate>
             <div className="form-group">
               <Label htmlFor="name">{t.contact.form.name} <span className="required">*</span></Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => handleChange('name', e.target.value)}
-                aria-invalid={!!errors.name}
-                disabled={isSubmitting}
-              />
+              <Input id="name" value={formData.name} onChange={(e) => handleChange('name', e.target.value)} aria-invalid={!!errors.name} disabled={isSubmitting} />
               {!!errors.name && <span className="error-message">{errors.name}</span>}
             </div>
 
             <div className="form-group">
               <Label htmlFor="email">{t.contact.form.email} <span className="required">*</span></Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleChange('email', e.target.value)}
-                aria-invalid={!!errors.email}
-                disabled={isSubmitting}
-              />
+              <Input id="email" type="email" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} aria-invalid={!!errors.email} disabled={isSubmitting} />
               {!!errors.email && <span className="error-message">{errors.email}</span>}
             </div>
 
             <div className="form-group">
               <Label htmlFor="phone">{t.contact.form.phone}</Label>
-              <Input
-                id="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => handleChange('phone', e.target.value)}
-                disabled={isSubmitting}
-                placeholder="+34 600 000 000"
-              />
+              <Input id="phone" type="tel" value={formData.phone} onChange={(e) => handleChange('phone', e.target.value)} disabled={isSubmitting} placeholder="+34 600 000 000" />
             </div>
 
             <div className="form-group">
@@ -263,21 +221,14 @@ const Contact = () => {
 
             <div className="form-group">
               <Label htmlFor="message">{t.contact.form.message} <span className="required">*</span></Label>
-              <Textarea
-                id="message"
-                rows={6}
-                value={formData.message}
-                onChange={(e) => handleChange('message', e.target.value)}
-                aria-invalid={!!errors.message}
-                disabled={isSubmitting}
-              />
+              <Textarea id="message" rows={6} value={formData.message} onChange={(e) => handleChange('message', e.target.value)} aria-invalid={!!errors.message} disabled={isSubmitting} />
               {!!errors.message && <span className="error-message">{errors.message}</span>}
             </div>
 
             <Button type="submit" size="lg" disabled={isSubmitting} className="submit-button">
               {isSubmitting ? <span>{t.contact.form.sending}</span> : (
                 <>
-                  <Send className="button-icon" aria-hidden="true" />
+                  <Send className="button-icon" />
                   {t.contact.form.submit}
                 </>
               )}
