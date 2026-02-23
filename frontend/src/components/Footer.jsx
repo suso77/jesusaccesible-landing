@@ -27,7 +27,7 @@ const Footer = () => {
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      
+
       // If navigating to contact section, focus on name input
       if (href === '#contacto') {
         setTimeout(() => {
@@ -37,6 +37,10 @@ const Footer = () => {
           }
         }, 800);
       }
+    } else {
+      // We are on a legal page — navigate to home with hash anchor
+      const currentBasePath = language === 'es' ? '' : '/en';
+      window.location.href = `${currentBasePath}/${href}`;
     }
   };
 
@@ -54,8 +58,8 @@ const Footer = () => {
             <ul className="footer-links">
               {navItems.map((item, index) => (
                 <li key={index}>
-                  <a 
-                    href={item.href} 
+                  <a
+                    href={item.href}
                     className="footer-link"
                     onClick={(e) => handleNavClick(e, item.href)}
                     aria-label={language === 'es'
@@ -73,11 +77,11 @@ const Footer = () => {
             <h3 className="footer-heading">{t.nav.contact}</h3>
             <ul className="footer-links">
               <li>
-                <a 
-                  href={`mailto:${t.contact.info.email}`} 
+                <a
+                  href={`mailto:${t.contact.info.email}`}
                   className="footer-link"
-                  aria-label={language === 'es' 
-                    ? `Correo electrónico: ${t.contact.info.email}` 
+                  aria-label={language === 'es'
+                    ? `Correo electrónico: ${t.contact.info.email}`
                     : `Email: ${t.contact.info.email}`}
                 >
                   <Mail className="footer-icon" aria-hidden="true" />
@@ -85,11 +89,11 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`} 
+                <a
+                  href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`}
                   className="footer-link"
-                  aria-label={language === 'es' 
-                    ? `Teléfono: ${t.contact.info.phone}` 
+                  aria-label={language === 'es'
+                    ? `Teléfono: ${t.contact.info.phone}`
                     : `Phone: ${t.contact.info.phone}`}
                 >
                   <Phone className="footer-icon" aria-hidden="true" />
@@ -103,13 +107,13 @@ const Footer = () => {
                 </span>
               </li>
               <li>
-                <a 
-                  href={`https://${t.contact.info.linkedin}`} 
-                  target="_blank" 
+                <a
+                  href={`https://${t.contact.info.linkedin}`}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="footer-link"
-                  aria-label={language === 'es' 
-                    ? 'LinkedIn, se abre en una nueva ventana' 
+                  aria-label={language === 'es'
+                    ? 'LinkedIn, se abre en una nueva ventana'
                     : 'LinkedIn, opens in a new window'}
                 >
                   <Linkedin className="footer-icon" aria-hidden="true" />
@@ -126,7 +130,7 @@ const Footer = () => {
             <ul className="footer-legal-links">
               {legalLinks.map((link, index) => (
                 <li key={index}>
-                  <Link 
+                  <Link
                     to={`${basePath}/${link.path}`}
                     className="footer-legal-link"
                   >

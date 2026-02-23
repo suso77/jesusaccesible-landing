@@ -25,7 +25,7 @@ const Header = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setMobileMenuOpen(false);
-      
+
       // If navigating to contact section, focus on name input
       if (href === '#contacto') {
         setTimeout(() => {
@@ -35,6 +35,11 @@ const Header = () => {
           }
         }, 800); // Wait for smooth scroll to complete
       }
+    } else {
+      // We are on a legal page — navigate to home with hash anchor
+      const basePath = language === 'es' ? '' : '/en';
+      window.location.href = `${basePath}/${href}`;
+      setMobileMenuOpen(false);
     }
   };
 
@@ -106,8 +111,8 @@ const Header = () => {
               variant="ghost"
               size="icon"
               onClick={toggleLanguage}
-              aria-label={language === 'es' 
-                ? `Idioma actual: Español. Cambiar a Inglés` 
+              aria-label={language === 'es'
+                ? `Idioma actual: Español. Cambiar a Inglés`
                 : `Current language: English. Switch to Spanish`}
               className="lang-button"
             >
@@ -138,8 +143,8 @@ const Header = () => {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <>
-            <div 
-              className="mobile-menu-overlay" 
+            <div
+              className="mobile-menu-overlay"
               onClick={closeMobileMenu}
               aria-hidden="true"
             />
