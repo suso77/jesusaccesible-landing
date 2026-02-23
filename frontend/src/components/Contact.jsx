@@ -97,28 +97,29 @@ const Contact = () => {
       return;
     }
 
-    // Double check BACKEND_URL
+    // Determine backend URL
     let effectiveBackendUrl = BACKEND_URL || '';
 
-    // If we're in development and no backend URL is set, try to guess it based on current host
-    // This helps mobile testing on same network (e.g. http://192.168.x.x:3000 -> :8000)
-    if (!effectiveBackendUrl && process.env.NODE_ENV === 'development') {
-      const { protocol, hostname } = window.location;
-      effectiveBackendUrl = `${protocol}//${hostname}:8000`;
-      console.log('Development mode: Guessed backend URL:', effectiveBackendUrl);
+    // Auto-fix for mobile testing: replace localhost with actual IP/hostname
+    if (process.env.NODE_ENV === 'development') {
+      const { hostname } = window.location;
+      if (!effectiveBackendUrl) {
+        effectiveBackendUrl = `http://${hostname}:8000`;
+      } else {
+        effectiveBackendUrl = effectiveBackendUrl
+          .replace('localhost', hostname)
+          .replace('127.0.0.1', hostname);
+      }
+      console.log('Using backend URL:', effectiveBackendUrl);
     }
 
     if (!effectiveBackendUrl && process.env.NODE_ENV === 'production') {
-      // Try relative as a last resort if it's likely served from the same domain
       effectiveBackendUrl = window.location.origin;
-      console.warn('Production mode: No BACKEND_URL found, falling back to origin:', effectiveBackendUrl);
     }
 
     setIsSubmitting(true);
     try {
       const url = `${effectiveBackendUrl}/api/contact`;
-      console.log('Sending request to:', url);
-
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -136,7 +137,6 @@ const Contact = () => {
       }
 
       if (!response.ok) {
-        console.error('Response NOT OK:', response.status, payload);
         throw new Error(payload?.message || (language === 'es' ? 'Error en el servidor' : 'Server error'));
       }
 
@@ -215,7 +215,6 @@ const Contact = () => {
 
             <div className="form-group">
               <Label htmlFor="service">{t.contact.form.service} <span className="required">*</span></Label>
-              <input type="hidden" name="service" value={formData.service} />
               <Select value={formData.service} onValueChange={(v) => handleChange('service', v)} disabled={isSubmitting}>
                 <SelectTrigger id="service" aria-invalid={!!errors.service}>
                   <SelectValue placeholder={t.contact.form.servicePlaceholder} />

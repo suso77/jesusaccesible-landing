@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import Logo from './Logo';
+
+const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Header = () => {
   const { language, switchLanguage, t } = useLanguage();
@@ -13,6 +15,20 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useFocusTrap(mobileMenuOpen);
   const menuButtonRef = React.useRef(null);
+
+  const BACKEND_URL = useMemo(() => {
+    let url = (RAW_BACKEND_URL || '').trim().replace(/\/$/, '');
+    if (process.env.NODE_ENV === 'development') {
+      const { hostname } = window.location;
+      if (!url) url = `http://${hostname}:8000`;
+      else {
+        url = url.replace('localhost', hostname).replace('127.0.0.1', hostname);
+      }
+    }
+    return url;
+  }, []);
+
+  const cvUrl = BACKEND_URL ? `${BACKEND_URL}/api/download-cv` : '/CV_Accesibilidad_Jesus_Fernandez.pdf';
 
   const legalPaths = ['/legal', '/privacidad', '/accesibilidad', '/en/legal', '/en/privacy', '/en/accessibility'];
   const isLegalPage = legalPaths.includes(location.pathname);
@@ -48,29 +64,6 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  // Handle escape key
-  React.useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape' && mobileMenuOpen) {
-        closeMobileMenu();
-      }
-    };
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, [mobileMenuOpen]);
-
-  // Prevent body scroll when menu is open
-  React.useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.classList.add('overflow-hidden');
-    } else {
-      document.body.classList.remove('overflow-hidden');
-    }
-    return () => {
-      document.body.classList.remove('overflow-hidden');
-    };
-  }, [mobileMenuOpen]);
-
   return (
     <header className="header" role="banner">
       <div className="container">
@@ -79,7 +72,6 @@ const Header = () => {
             <Logo />
           </div>
 
-          {/* Desktop Navigation */}
           <ul className="nav-menu desktop-only" role="menubar">
             {navItems.map((item, index) => (
               <li key={index} role="none">
@@ -98,7 +90,6 @@ const Header = () => {
             ))}
           </ul>
 
-          {/* Language Switcher & Mobile Menu Button */}
           <div className="nav-actions">
             <Button
               variant="ghost"
@@ -133,7 +124,6 @@ const Header = () => {
           </div>
         </nav>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <>
             <div
@@ -167,7 +157,7 @@ const Header = () => {
                 ))}
                 <li role="none" className="mobile-nav-cv">
                   <a
-                    href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
+                    href={cvUrl}
                     download="CV_Accesibilidad_Jesus_Fernandez.pdf"
                     target="_blank"
                     rel="noopener noreferrer"

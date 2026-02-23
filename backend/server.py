@@ -161,14 +161,14 @@ async def submit_contact_form(contact_data: ContactMessage):
 @api_router.get("/download-cv")
 async def download_cv():
     """Download CV PDF"""
-    cv_path = ROOT_DIR / "static" / "CV_Jesus_Fernandez.pdf"
+    cv_path = ROOT_DIR / "static" / "CV_Accesibilidad_Jesus_Fernandez.pdf"
     if not cv_path.exists():
         raise HTTPException(status_code=404, detail="CV not found")
     
     return FileResponse(
         path=str(cv_path),
         media_type="application/pdf",
-        filename="CV_Jesus_Fernandez_Abeledo.pdf"
+        filename="CV_Accesibilidad_Jesus_Fernandez.pdf"
     )
 
 # Include the router in the main app
