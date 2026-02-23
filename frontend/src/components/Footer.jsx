@@ -1,10 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { Mail, Phone, MapPin, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   const { language, t } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const legalPaths = ['/legal', '/privacy', '/accessibility', '/en/legal', '/en/privacy', '/en/accessibility'];
+  const isLegalPage = legalPaths.includes(location.pathname);
 
   const navItems = [
     { href: '#sobre-mi', label: t.nav.about },
@@ -24,23 +29,23 @@ const Footer = () => {
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
 
-      // If navigating to contact section, focus on name input
-      if (href === '#contacto') {
-        setTimeout(() => {
-          const nameInput = document.querySelector('#name');
-          if (nameInput) {
-            nameInput.focus();
-          }
-        }, 800);
-      }
+    if (isLegalPage) {
+      // Navigate to home via React Router passing the target section as state
+      const homePath = language === 'es' ? '/' : '/en';
+      navigate(homePath, { state: { scrollTo: href } });
     } else {
-      // We are on a legal page — navigate to home with hash anchor
-      const currentBasePath = language === 'es' ? '' : '/en';
-      window.location.href = `${currentBasePath}/${href}`;
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        // If navigating to contact section, focus on name input
+        if (href === '#contacto') {
+          setTimeout(() => {
+            const nameInput = document.querySelector('#name');
+            if (nameInput) nameInput.focus();
+          }, 800);
+        }
+      }
     }
   };
 

@@ -82,6 +82,28 @@ const MainLayout = () => {
     }
   }, [location.pathname]);
 
+  // Handle scroll to section when navigating from legal pages
+  useEffect(() => {
+    const scrollTarget = location.state?.scrollTo || location.hash;
+    if (scrollTarget) {
+      // Wait for React to render all sections before scrolling
+      const timer = setTimeout(() => {
+        const element = document.querySelector(scrollTarget);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          // Focus on name input if navigating to contact
+          if (scrollTarget === '#contacto') {
+            setTimeout(() => {
+              const nameInput = document.querySelector('#name');
+              if (nameInput) nameInput.focus();
+            }, 800);
+          }
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state, location.hash]);
+
   return (
     <>
       <SkipLink />

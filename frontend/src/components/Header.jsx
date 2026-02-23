@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { useFocusTrap } from '../hooks/useFocusTrap';
@@ -7,9 +8,14 @@ import Logo from './Logo';
 
 const Header = () => {
   const { language, switchLanguage, t } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useFocusTrap(mobileMenuOpen);
   const menuButtonRef = React.useRef(null);
+
+  const legalPaths = ['/legal', '/privacy', '/accessibility', '/en/legal', '/en/privacy', '/en/accessibility'];
+  const isLegalPage = legalPaths.includes(location.pathname);
 
   const navItems = [
     { href: '#sobre-mi', label: t.nav.about },
@@ -21,25 +27,24 @@ const Header = () => {
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setMobileMenuOpen(false);
+    setMobileMenuOpen(false);
 
-      // If navigating to contact section, focus on name input
-      if (href === '#contacto') {
-        setTimeout(() => {
-          const nameInput = document.querySelector('#name');
-          if (nameInput) {
-            nameInput.focus();
-          }
-        }, 800); // Wait for smooth scroll to complete
-      }
+    if (isLegalPage) {
+      // Navigate to home via React Router passing the target section as state
+      const homePath = language === 'es' ? '/' : '/en';
+      navigate(homePath, { state: { scrollTo: href } });
     } else {
-      // We are on a legal page — navigate to home with hash anchor
-      const basePath = language === 'es' ? '' : '/en';
-      window.location.href = `${basePath}/${href}`;
-      setMobileMenuOpen(false);
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        // If navigating to contact section, focus on name input
+        if (href === '#contacto') {
+          setTimeout(() => {
+            const nameInput = document.querySelector('#name');
+            if (nameInput) nameInput.focus();
+          }, 800);
+        }
+      }
     }
   };
 
