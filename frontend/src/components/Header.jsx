@@ -5,7 +5,6 @@ import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import Logo from './Logo';
-import { getBackendUrl } from '../utils/api';
 
 const Header = () => {
   const { language, switchLanguage, t } = useLanguage();
@@ -49,10 +48,9 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  // Dynamic CV download URL for mobile menu
+  // Construct absolute URL for the CV
   const cvDownloadUrl = useMemo(() => {
-    const backendUrl = getBackendUrl();
-    return `${backendUrl}/api/download-cv`;
+    return `${window.location.origin}/CV_Accesibilidad_Jesus_Fernandez.pdf`;
   }, []);
 
   return (
@@ -152,8 +150,11 @@ const Header = () => {
                     download="CV_Accesibilidad_Jesus_Fernandez.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
+                    type="application/pdf"
                     className="mobile-nav-link download-cv-link"
-                    onClick={closeMobileMenu}
+                    // We remove onClick={closeMobileMenu} to prevent the component from
+                    // unmounting immediately, which can block the download trigger on mobile browsers.
+                    // The menu can be closed by tapping the overlay or the sections above.
                     role="menuitem"
                     aria-label={language === 'es'
                       ? 'Descargar CV en formato PDF'

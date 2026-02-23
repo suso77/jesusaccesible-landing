@@ -3,7 +3,6 @@ import { useLanguage } from '../context/LanguageContext';
 import { Button } from './ui/button';
 import { Download, Mail } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { getBackendUrl } from '../utils/api';
 
 const Hero = () => {
   const { language, t } = useLanguage();
@@ -16,11 +15,9 @@ const Hero = () => {
     }
   };
 
-  // Determine the CV download URL dynamically
-  // Using the backend endpoint is much more reliable on mobile devices
+  // Construct absolute URL for the CV to ensure reliability across all browser types/mobile
   const cvDownloadUrl = useMemo(() => {
-    const backendUrl = getBackendUrl();
-    return `${backendUrl}/api/download-cv`;
+    return `${window.location.origin}/CV_Accesibilidad_Jesus_Fernandez.pdf`;
   }, []);
 
   return (
@@ -50,6 +47,7 @@ const Hero = () => {
               download="CV_Accesibilidad_Jesus_Fernandez.pdf"
               target="_blank"
               rel="noopener noreferrer"
+              type="application/pdf"
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-2 border-[#364559] text-[#364559] shadow-sm hover:bg-[#364559] hover:text-white h-11 px-8 cta-secondary"
               aria-label={language === 'es'
                 ? 'Descargar CV en formato PDF'

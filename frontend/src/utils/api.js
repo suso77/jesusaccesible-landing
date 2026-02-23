@@ -6,12 +6,13 @@ export const getBackendUrl = () => {
     // Auto-discovery logic (essential for testing on mobile via local network)
     if (!url) {
         // If no environment variable, assume port 8000 on the current host in dev
+        // or same origin for production
         const devEnvironments = ['localhost', '127.0.0.1', '192.168.', '10.', '172.'];
         const isDev = devEnvironments.some(prefix => hostname.includes(prefix));
         url = isDev ? `${protocol}//${hostname}:8000` : window.location.origin;
     } else {
         // If variable exists, ensure it uses the current device's hostname instead of 'localhost'
-        // This allows a mobile phone to reach the computer's backend
+        // This allows a mobile phone to reach the computer's backend IP
         url = url.replace('localhost', hostname).replace('127.0.0.1', hostname);
     }
 

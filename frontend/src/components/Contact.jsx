@@ -30,7 +30,7 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Use shared utility for backend URL
+  // Determine the effective backend URL using our shared utility
   const BACKEND_URL = useMemo(() => getBackendUrl(), []);
 
   const validateForm = (data) => {
@@ -44,8 +44,9 @@ const Contact = () => {
       newErrors.email = t.contact.form.emailInvalid;
     }
     if (data.phone.trim()) {
-      const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
-      if (!phoneRegex.test(data.phone.replace(/\s/g, ''))) {
+      // Basic phone check
+      const phoneDigits = data.phone.replace(/\D/g, '');
+      if (phoneDigits && phoneDigits.length < 9) {
         newErrors.phone = t.contact.form.phoneInvalid;
       }
     }
@@ -77,7 +78,7 @@ const Contact = () => {
     setIsSubmitting(true);
     try {
       const apiUrl = `${BACKEND_URL}/api/contact`;
-      console.log('[DEBUG] Posting to:', apiUrl);
+      console.log('[DEBUG] Form submission to:', apiUrl);
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -99,7 +100,7 @@ const Contact = () => {
       setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
     } catch (error) {
-      console.error('[CRITICAL] Form submission failed:', error);
+      console.error('[CRITICAL] Contact form error:', error);
       toast({
         title: t.contact.form.error,
         description: error.message || (language === 'es' ? 'Error de conexión' : 'Connection error'),
@@ -187,6 +188,7 @@ const Contact = () => {
                 placeholder="+34 600 000 000"
                 autoComplete="tel"
               />
+              {!!errors.phone && <span className="error-message">{errors.phone}</span>}
             </div>
 
             <div className="form-group">
