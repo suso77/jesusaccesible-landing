@@ -12,7 +12,9 @@ import Experience from "./components/Experience";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import LegalPage from "./components/LegalPage";
+
+// Lazy load components that are not needed for initial paint
+const LegalPage = React.lazy(() => import("./components/LegalPage"));
 
 const MainLayout = () => {
   const location = useLocation();
@@ -128,7 +130,9 @@ const LegalLayout = () => {
       <SkipLink />
       <Header />
       <main id="main-content" tabIndex="-1">
-        <LegalPage />
+        <React.Suspense fallback={<div className="h-screen bg-slate-950" />}>
+          <LegalPage />
+        </React.Suspense>
       </main>
       <Footer />
       <Toaster />
@@ -140,18 +144,20 @@ function App() {
   return (
     <BrowserRouter>
       <LanguageProvider>
-        <Routes>
-          <Route path="/" element={<MainLayout />} />
-          <Route path="/en" element={<MainLayout />} />
+        <React.Suspense fallback={<div className="h-screen bg-slate-950" />}>
+          <Routes>
+            <Route path="/" element={<MainLayout />} />
+            <Route path="/en" element={<MainLayout />} />
 
-          <Route path="/legal" element={<LegalLayout />} />
-          <Route path="/privacidad" element={<LegalLayout />} />
-          <Route path="/accesibilidad" element={<LegalLayout />} />
+            <Route path="/legal" element={<LegalLayout />} />
+            <Route path="/privacidad" element={<LegalLayout />} />
+            <Route path="/accesibilidad" element={<LegalLayout />} />
 
-          <Route path="/en/legal" element={<LegalLayout />} />
-          <Route path="/en/privacy" element={<LegalLayout />} />
-          <Route path="/en/accessibility" element={<LegalLayout />} />
-        </Routes>
+            <Route path="/en/legal" element={<LegalLayout />} />
+            <Route path="/en/privacy" element={<LegalLayout />} />
+            <Route path="/en/accessibility" element={<LegalLayout />} />
+          </Routes>
+        </React.Suspense>
       </LanguageProvider>
     </BrowserRouter>
   );
