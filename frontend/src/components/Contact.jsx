@@ -59,8 +59,7 @@ const Contact = () => {
 
     // Teléfono (opcional)
     if (data.phone.trim()) {
-      const phoneRegex =
-        /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
+      const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
       if (!phoneRegex.test(data.phone.replace(/\s/g, ''))) {
         newErrors.phone = t.contact.form.phoneInvalid;
       }
@@ -84,17 +83,19 @@ const Contact = () => {
     const firstErrorField = Object.keys(newErrors)[0];
     if (!firstErrorField) return;
 
-    // Inputs/textarea nativos: coinciden id con keys (name, email, phone, message)
+    // 1) Inputs/textarea nativos
     const elById = document.getElementById(firstErrorField);
     if (elById && typeof elById.focus === 'function') {
       elById.focus();
       return;
     }
 
-    // Radix Select: trigger tiene id="service"
+    // 2) Radix Select: trigger tiene id="service"
     if (firstErrorField === 'service') {
       const trigger = document.getElementById('service');
-      if (trigger && typeof trigger.focus === 'function') trigger.focus();
+      if (trigger && typeof trigger.focus === 'function') {
+        trigger.focus();
+      }
     }
   };
 
@@ -108,14 +109,13 @@ const Contact = () => {
       return;
     }
 
-    // Backend no configurado -> no va a enviar nunca
     if (!BACKEND_URL) {
       setFormStatus('error');
       toast({
-        title: 'Backend no configurado: REACT_APP_BACKEND_URL',
+        title: 'Backend no configurado',
+        description: 'Falta la variable REACT_APP_BACKEND_URL en el entorno.',
         variant: 'destructive'
       });
-      console.error('Missing REACT_APP_BACKEND_URL env var');
       return;
     }
 
@@ -131,7 +131,6 @@ const Contact = () => {
       const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        console.error('Contact API error:', response.status, payload);
         throw new Error(payload?.error || payload?.message || `HTTP ${response.status}`);
       }
 
@@ -182,54 +181,25 @@ const Contact = () => {
             <h3 className="contact-info-title">{t.contact.cta}</h3>
             <ul className="contact-info-list">
               <li>
-                <a
-                  href={`mailto:${t.contact.info.email}`}
-                  className="contact-info-link"
-                  aria-label={
-                    language === 'es'
-                      ? `Correo electrónico: ${t.contact.info.email}`
-                      : `Email: ${t.contact.info.email}`
-                  }
-                >
+                <a href={`mailto:${t.contact.info.email}`} className="contact-info-link">
                   <Mail className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.email}</span>
                 </a>
               </li>
-
               <li>
-                <a
-                  href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`}
-                  className="contact-info-link"
-                  aria-label={
-                    language === 'es'
-                      ? `Teléfono: ${t.contact.info.phone}`
-                      : `Phone: ${t.contact.info.phone}`
-                  }
-                >
+                <a href={`tel:${t.contact.info.phone.replace(/\s/g, '')}`} className="contact-info-link">
                   <Phone className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.phone}</span>
                 </a>
               </li>
-
               <li>
                 <div className="contact-info-text">
                   <MapPin className="contact-icon" aria-hidden="true" />
                   <span>{t.contact.info.location}</span>
                 </div>
               </li>
-
               <li>
-                <a
-                  href={`https://${t.contact.info.linkedin}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="contact-info-link"
-                  aria-label={
-                    language === 'es'
-                      ? 'LinkedIn, se abre en una nueva ventana'
-                      : 'LinkedIn, opens in a new window'
-                  }
-                >
+                <a href={`https://${t.contact.info.linkedin}`} target="_blank" rel="noopener noreferrer" className="contact-info-link">
                   <Linkedin className="contact-icon" aria-hidden="true" />
                   <span>LinkedIn</span>
                 </a>
@@ -237,171 +207,75 @@ const Contact = () => {
             </ul>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="contact-form"
-            noValidate
-            aria-label={t.contact.title}
-          >
+          <form onSubmit={handleSubmit} className="contact-form" noValidate>
             <div className="form-group">
-              <Label htmlFor="name">
-                {t.contact.form.name}
-                <span className="required" aria-label="required">
-                  *
-                </span>
-              </Label>
+              <Label htmlFor="name">{t.contact.form.name} <span className="required">*</span></Label>
               <Input
                 id="name"
-                name="name"
-                type="text"
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
-                aria-required="true"
                 aria-invalid={!!errors.name}
-                aria-describedby={errors.name ? 'name-error' : undefined}
                 disabled={isSubmitting}
-                autoComplete="name"
               />
-              {!!errors.name && (
-                <span id="name-error" className="error-message" role="alert">
-                  {errors.name}
-                </span>
-              )}
+              {!!errors.name && <span className="error-message">{errors.name}</span>}
             </div>
 
             <div className="form-group">
-              <Label htmlFor="email">
-                {t.contact.form.email}
-                <span className="required" aria-label="required">
-                  *
-                </span>
-              </Label>
+              <Label htmlFor="email">{t.contact.form.email} <span className="required">*</span></Label>
               <Input
                 id="email"
-                name="email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleChange('email', e.target.value)}
-                aria-required="true"
                 aria-invalid={!!errors.email}
-                aria-describedby={errors.email ? 'email-error' : undefined}
                 disabled={isSubmitting}
-                autoComplete="email"
               />
-              {!!errors.email && (
-                <span id="email-error" className="error-message" role="alert">
-                  {errors.email}
-                </span>
-              )}
+              {!!errors.email && <span className="error-message">{errors.email}</span>}
             </div>
 
             <div className="form-group">
               <Label htmlFor="phone">{t.contact.form.phone}</Label>
               <Input
                 id="phone"
-                name="phone"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleChange('phone', e.target.value)}
-                aria-invalid={!!errors.phone}
-                aria-describedby={errors.phone ? 'phone-error' : undefined}
                 disabled={isSubmitting}
                 placeholder="+34 600 000 000"
-                autoComplete="tel"
               />
-              {!!errors.phone && (
-                <span id="phone-error" className="error-message" role="alert">
-                  {errors.phone}
-                </span>
-              )}
             </div>
 
             <div className="form-group">
-              <Label htmlFor="service">
-                {t.contact.form.service}
-                <span className="required" aria-label="required">
-                  *
-                </span>
-              </Label>
-
-              {/* Radix Select no es nativo: añadimos input hidden por consistencia */}
+              <Label htmlFor="service">{t.contact.form.service} <span className="required">*</span></Label>
               <input type="hidden" name="service" value={formData.service} />
-
-              <Select
-                value={formData.service}
-                onValueChange={(value) => handleChange('service', value)}
-                disabled={isSubmitting}
-              >
-                <SelectTrigger
-                  id="service"
-                  aria-required="true"
-                  aria-invalid={!!errors.service}
-                  aria-describedby={errors.service ? 'service-error' : undefined}
-                >
+              <Select value={formData.service} onValueChange={(v) => handleChange('service', v)} disabled={isSubmitting}>
+                <SelectTrigger id="service" aria-invalid={!!errors.service}>
                   <SelectValue placeholder={t.contact.form.servicePlaceholder} />
                 </SelectTrigger>
                 <SelectContent>
-                  {serviceOptions[language].map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
+                  {serviceOptions[language].map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-
-              {!!errors.service && (
-                <span id="service-error" className="error-message" role="alert">
-                  {errors.service}
-                </span>
-              )}
+              {!!errors.service && <span className="error-message">{errors.service}</span>}
             </div>
 
             <div className="form-group">
-              <Label htmlFor="message">
-                {t.contact.form.message}
-                <span className="required" aria-label="required">
-                  *
-                </span>
-              </Label>
+              <Label htmlFor="message">{t.contact.form.message} <span className="required">*</span></Label>
               <Textarea
                 id="message"
-                name="message"
                 rows={6}
                 value={formData.message}
                 onChange={(e) => handleChange('message', e.target.value)}
-                aria-required="true"
                 aria-invalid={!!errors.message}
-                aria-describedby={errors.message ? 'message-error' : undefined}
                 disabled={isSubmitting}
               />
-              {!!errors.message && (
-                <span id="message-error" className="error-message" role="alert">
-                  {errors.message}
-                </span>
-              )}
+              {!!errors.message && <span className="error-message">{errors.message}</span>}
             </div>
 
-            {formStatus === 'success' && (
-              <div className="success-message" role="status" aria-live="polite">
-                {t.contact.form.success}
-              </div>
-            )}
-
-            {formStatus === 'error' && (
-              <div className="error-message" role="alert" aria-live="assertive">
-                {t.contact.form.error}
-              </div>
-            )}
-
-            <Button
-              type="submit"
-              size="lg"
-              disabled={isSubmitting}
-              className="submit-button"
-            >
-              {isSubmitting ? (
-                <span>{t.contact.form.sending}</span>
-              ) : (
+            <Button type="submit" size="lg" disabled={isSubmitting} className="submit-button">
+              {isSubmitting ? <span>{t.contact.form.sending}</span> : (
                 <>
                   <Send className="button-icon" aria-hidden="true" />
                   {t.contact.form.submit}
