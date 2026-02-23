@@ -4,7 +4,8 @@ import { Button } from './ui/button';
 import { Download, Mail } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = (RAW_BACKEND_URL || '').replace(/\/$/, '');
 
 const Hero = () => {
   const { language, t } = useLanguage();
@@ -17,26 +18,7 @@ const Hero = () => {
     }
   };
 
-  const handleDownloadCV = async () => {
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/download-cv`);
-      if (!response.ok) throw new Error('Failed to download CV');
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'CV_Jesus_Fernandez_Abeledo.pdf';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (error) {
-      console.error('Error downloading CV:', error);
-      alert('Error al descargar el CV. Por favor, intenta de nuevo.');
-    }
-  };
-
+  // handleDownloadCV no longer needed
   return (
     <section id="hero" className="hero" aria-label={t.hero.title}>
       <div className="container">
@@ -61,14 +43,21 @@ const Hero = () => {
             <Button
               size="lg"
               variant="outline"
-              onClick={handleDownloadCV}
+              asChild
               className="cta-secondary"
-              aria-label={language === 'es'
-                ? 'Descargar CV en formato PDF'
-                : 'Download CV in PDF format'}
             >
-              <Download className="button-icon" aria-hidden="true" />
-              {t.hero.cta2}
+              <a
+                href="/CV_Jesus_Fernandez_Abeledo.pdf"
+                download="CV_Jesus_Fernandez_Abeledo.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={language === 'es'
+                  ? 'Descargar CV en formato PDF'
+                  : 'Download CV in PDF format'}
+              >
+                <Download className="button-icon" aria-hidden="true" />
+                {t.hero.cta2}
+              </a>
             </Button>
           </div>
         </div>

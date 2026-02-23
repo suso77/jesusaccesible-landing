@@ -87,14 +87,23 @@ const Contact = () => {
     const newErrors = validateForm(formData);
     if (Object.keys(newErrors).length > 0) {
       focusFirstError(newErrors);
+      toast({
+        title: language === 'es' ? 'Error en el formulario' : 'Form error',
+        description: language === 'es'
+          ? 'Por favor, revisa los errores en el formulario.'
+          : 'Please review the errors in the form.',
+        variant: 'destructive'
+      });
       return;
     }
 
-    if (!BACKEND_URL) {
+    // Double check BACKEND_URL
+    const effectiveBackendUrl = BACKEND_URL || '';
+    if (!effectiveBackendUrl && process.env.NODE_ENV === 'production') {
       setFormStatus('error');
       toast({
         title: 'Error de configuración',
-        description: 'Falta la variable de entorno REACT_APP_BACKEND_URL.',
+        description: 'La URL del servidor no está configurada.',
         variant: 'destructive'
       });
       return;
@@ -102,9 +111,13 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`${BACKEND_URL}/api/contact`, {
+      const url = `${effectiveBackendUrl}/api/contact`;
+      const response = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(formData)
       });
 
@@ -116,8 +129,13 @@ const Contact = () => {
       setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
     } catch (error) {
+      console.error('Submission error:', error);
       setFormStatus('error');
-      toast({ title: t.contact.form.error, variant: 'destructive' });
+      toast({
+        title: t.contact.form.error,
+        description: error.message || 'Error de conexión con el servidor',
+        variant: 'destructive'
+      });
     } finally {
       setIsSubmitting(false);
     }

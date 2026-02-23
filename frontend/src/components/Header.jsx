@@ -166,6 +166,22 @@ const Header = () => {
                     </a>
                   </li>
                 ))}
+                <li role="none" className="mobile-nav-cv">
+                  <a
+                    href="/CV_Jesus_Fernandez_Abeledo.pdf"
+                    download="CV_Jesus_Fernandez_Abeledo.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mobile-nav-link download-cv-link"
+                    onClick={closeMobileMenu}
+                    role="menuitem"
+                    aria-label={language === 'es'
+                      ? 'Descargar CV en formato PDF'
+                      : 'Download CV in PDF format'}
+                  >
+                    {language === 'es' ? 'Descargar CV' : 'Download CV'}
+                  </a>
+                </li>
               </ul>
             </div>
           </>
