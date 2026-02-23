@@ -195,8 +195,6 @@ export const content = {
       },
       cta: 'También puedes contactarme directamente por:'
     },
-<<<<<<< HEAD
-=======
     legalPages: {
       backToHome: 'Volver al inicio',
       lastUpdated: 'Última actualización',
@@ -277,7 +275,6 @@ export const content = {
         ]
       }
     },
->>>>>>> 2fa3968 (Initial commit)
     footer: {
   copyright: '© 2025 Jesús Fernández Abeledo. Todos los derechos reservados.',
   wcag: 'Este sitio cumple con WCAG 2.2 Nivel AA',
@@ -483,8 +480,6 @@ export const content = {
       },
       cta: 'You can also contact me directly via:'
     },
-<<<<<<< HEAD
-=======
       legalPages: {
         backToHome: 'Back to home',
         lastUpdated: 'Last updated',
@@ -565,7 +560,6 @@ export const content = {
           ]
         }
       },
->>>>>>> 2fa3968 (Initial commit)
     footer: {
   copyright: '© 2025 Jesús Fernández Abeledo. All rights reserved.',
   wcag: 'This site complies with WCAG 2.2 Level AA',
