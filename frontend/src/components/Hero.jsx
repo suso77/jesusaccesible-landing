@@ -40,25 +40,19 @@ const Hero = () => {
               <Mail className="button-icon" aria-hidden="true" />
               {t.hero.cta1}
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              asChild
-              className="cta-secondary"
+            <a
+              href="/CV_Jesus_Fernandez_Accesibilidad_Digital.pdf"
+              download="CV_Jesus_Fernandez_Accesibilidad_Digital.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-2 border-[#364559] text-[#364559] shadow-sm hover:bg-[#364559] hover:text-white h-11 px-8 cta-secondary"
+              aria-label={language === 'es'
+                ? 'Descargar CV en formato PDF'
+                : 'Download CV in PDF format'}
             >
-              <a
-                href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
-                download="CV_Accesibilidad_Jesus_Fernandez.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={language === 'es'
-                  ? 'Descargar CV en formato PDF'
-                  : 'Download CV in PDF format'}
-              >
-                <Download className="button-icon" aria-hidden="true" />
-                {t.hero.cta2}
-              </a>
-            </Button>
+              <Download className="button-icon" aria-hidden="true" />
+              {t.hero.cta2}
+            </a>
           </div>
         </div>
       </div>
