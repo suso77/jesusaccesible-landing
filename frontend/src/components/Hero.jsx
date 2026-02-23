@@ -47,8 +47,8 @@ const Hero = () => {
               className="cta-secondary"
             >
               <a
-                href="/CV_Jesus_Fernandez_Abeledo.pdf"
-                download="CV_Jesus_Fernandez_Abeledo.pdf"
+                href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
+                download="CV_Accesibilidad_Jesus_Fernandez.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={language === 'es'

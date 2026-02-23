@@ -168,8 +168,8 @@ const Header = () => {
                 ))}
                 <li role="none" className="mobile-nav-cv">
                   <a
-                    href="/CV_Jesus_Fernandez_Abeledo.pdf"
-                    download="CV_Jesus_Fernandez_Abeledo.pdf"
+                    href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
+                    download="CV_Accesibilidad_Jesus_Fernandez.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mobile-nav-link download-cv-link"

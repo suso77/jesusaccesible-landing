@@ -98,15 +98,20 @@ const Contact = () => {
     }
 
     // Double check BACKEND_URL
-    const effectiveBackendUrl = BACKEND_URL || '';
+    let effectiveBackendUrl = BACKEND_URL || '';
+
+    // If we're in development and no backend URL is set, try to guess it based on current host
+    // This helps mobile testing on same network (e.g. http://192.168.x.x:3000 -> :8000)
+    if (!effectiveBackendUrl && process.env.NODE_ENV === 'development') {
+      const { protocol, hostname } = window.location;
+      effectiveBackendUrl = `${protocol}//${hostname}:8000`;
+      console.log('Development mode: Guessed backend URL:', effectiveBackendUrl);
+    }
+
     if (!effectiveBackendUrl && process.env.NODE_ENV === 'production') {
-      setFormStatus('error');
-      toast({
-        title: 'Error de configuración',
-        description: 'La URL del servidor no está configurada.',
-        variant: 'destructive'
-      });
-      return;
+      // Try relative as a last resort if it's likely served from the same domain
+      effectiveBackendUrl = window.location.origin;
+      console.warn('Production mode: No BACKEND_URL found, falling back to origin:', effectiveBackendUrl);
     }
 
     setIsSubmitting(true);
