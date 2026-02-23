@@ -14,7 +14,7 @@ const Header = () => {
   const menuRef = useFocusTrap(mobileMenuOpen);
   const menuButtonRef = React.useRef(null);
 
-  const legalPaths = ['/legal', '/privacy', '/accessibility', '/en/legal', '/en/privacy', '/en/accessibility'];
+  const legalPaths = ['/legal', '/privacidad', '/accesibilidad', '/en/legal', '/en/privacy', '/en/accessibility'];
   const isLegalPage = legalPaths.includes(location.pathname);
 
   const navItems = [

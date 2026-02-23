@@ -11,7 +11,14 @@ const LegalPage = () => {
 
   // Extract page type from URL path
   const pathParts = location.pathname.split('/').filter(Boolean);
-  const pageType = pathParts[pathParts.length - 1]; // legal, privacy, accessibility
+  const rawSlug = pathParts[pathParts.length - 1]; // legal, privacy, accessibility, privacidad, accesibilidad
+
+  // Map Spanish URL slugs to data keys
+  const slugToKey = {
+    privacidad: 'privacy',
+    accesibilidad: 'accessibility',
+  };
+  const pageType = slugToKey[rawSlug] || rawSlug;
 
   const pageData = t.legalPages?.[pageType];
 

@@ -145,8 +145,8 @@ function App() {
           <Route path="/en" element={<MainLayout />} />
 
           <Route path="/legal" element={<LegalLayout />} />
-          <Route path="/privacy" element={<LegalLayout />} />
-          <Route path="/accessibility" element={<LegalLayout />} />
+          <Route path="/privacidad" element={<LegalLayout />} />
+          <Route path="/accesibilidad" element={<LegalLayout />} />
 
           <Route path="/en/legal" element={<LegalLayout />} />
           <Route path="/en/privacy" element={<LegalLayout />} />

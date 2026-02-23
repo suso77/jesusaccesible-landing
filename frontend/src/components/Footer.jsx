@@ -8,7 +8,7 @@ const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const legalPaths = ['/legal', '/privacy', '/accessibility', '/en/legal', '/en/privacy', '/en/accessibility'];
+  const legalPaths = ['/legal', '/privacidad', '/accesibilidad', '/en/legal', '/en/privacy', '/en/accessibility'];
   const isLegalPage = legalPaths.includes(location.pathname);
 
   const navItems = [
@@ -21,8 +21,8 @@ const Footer = () => {
 
   const legalLinks = [
     { path: 'legal', label: t.footer.legal },
-    { path: 'privacy', label: t.footer.privacy },
-    { path: 'accessibility', label: t.footer.accessibility }
+    { path: language === 'es' ? 'privacidad' : 'privacy', label: t.footer.privacy },
+    { path: language === 'es' ? 'accesibilidad' : 'accessibility', label: t.footer.accessibility }
   ];
 
   const basePath = language === 'es' ? '' : '/en';

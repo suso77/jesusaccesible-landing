@@ -5,7 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 const Logo = () => {
   const { language } = useLanguage();
   const location = useLocation();
-  const isLegalPage = ['/legal', '/privacy', '/accessibility', '/en/legal', '/en/privacy', '/en/accessibility'].includes(location.pathname);
+  const isLegalPage = ['/legal', '/privacidad', '/accesibilidad', '/en/legal', '/en/privacy', '/en/accessibility'].includes(location.pathname);
   const homePath = language === 'es' ? '/' : '/en';
 
   const handleClick = (e) => {
