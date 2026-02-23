@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Mail, Phone, MapPin, Linkedin, Send } from 'lucide-react';
 import { Button } from './ui/button';
@@ -15,7 +15,7 @@ import {
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
 
-const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 const Contact = () => {
   const { language, t } = useLanguage();
@@ -72,15 +72,12 @@ const Contact = () => {
       return;
     }
 
-    // Backend URL handling: Use env var or fall back to current origin
-    let backendUrl = (RAW_BACKEND_URL || '').trim().replace(/\/$/, '');
-    if (!backendUrl) {
-      backendUrl = window.location.origin;
-    }
+    const hostUrl = BACKEND_URL.replace(/\/$/, '') || window.location.origin;
+    const apiUrl = `${hostUrl}/api/contact`;
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`${backendUrl}/api/contact`, {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
