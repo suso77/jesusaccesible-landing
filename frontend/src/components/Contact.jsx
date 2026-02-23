@@ -133,6 +133,7 @@ const Contact = () => {
       <div className="container">
         <h2 id="contact-heading" className="section-title">{t.contact.title}</h2>
         <p className="contact-description">{t.contact.description}</p>
+
         <div className="contact-wrapper">
           <div className="contact-info">
             <h3 className="contact-info-title">{t.contact.cta}</h3>
@@ -159,21 +160,25 @@ const Contact = () => {
               </li>
             </ul>
           </div>
+
           <form onSubmit={handleSubmit} className="contact-form" noValidate>
             <div className="form-group">
               <Label htmlFor="name">{t.contact.form.name} <span className="required">*</span></Label>
               <Input id="name" value={formData.name} onChange={(e) => handleChange('name', e.target.value)} aria-invalid={!!errors.name} disabled={isSubmitting} />
               {!!errors.name && <span className="error-message">{errors.name}</span>}
             </div>
+
             <div className="form-group">
               <Label htmlFor="email">{t.contact.form.email} <span className="required">*</span></Label>
               <Input id="email" type="email" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} aria-invalid={!!errors.email} disabled={isSubmitting} />
               {!!errors.email && <span className="error-message">{errors.email}</span>}
             </div>
+
             <div className="form-group">
               <Label htmlFor="phone">{t.contact.form.phone}</Label>
               <Input id="phone" type="tel" value={formData.phone} onChange={(e) => handleChange('phone', e.target.value)} disabled={isSubmitting} placeholder="+34 600 000 000" />
             </div>
+
             <div className="form-group">
               <Label htmlFor="service">{t.contact.form.service} <span className="required">*</span></Label>
               <input type="hidden" name="service" value={formData.service} />
@@ -189,13 +194,17 @@ const Contact = () => {
               </Select>
               {!!errors.service && <span className="error-message">{errors.service}</span>}
             </div>
+
             <div className="form-group">
               <Label htmlFor="message">{t.contact.form.message} <span className="required">*</span></Label>
               <Textarea id="message" rows={6} value={formData.message} onChange={(e) => handleChange('message', e.target.value)} aria-invalid={!!errors.message} disabled={isSubmitting} />
               {!!errors.message && <span className="error-message">{errors.message}</span>}
             </div>
+
             <Button type="submit" size="lg" disabled={isSubmitting} className="submit-button">
-              {isSubmitting ? <span>{t.contact.form.sending}</span> : (
+              {isSubmitting ? (
+                <span>{t.contact.form.sending}</span>
+              ) : (
                 <>
                   <Send className="button-icon" /> {t.contact.form.submit}
                 </>
