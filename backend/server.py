@@ -174,13 +174,21 @@ async def download_cv():
 # Include the router in the main app
 app.include_router(api_router)
 
+# Configure CORS
+# Note: If allow_credentials is True, allow_origins cannot be ["*"]
+cors_origins = os.environ.get('CORS_ORIGINS', '*').split(',')
+allow_all_origins = "*" in cors_origins or (len(cors_origins) == 1 and cors_origins[0] == "*")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_credentials=not allow_all_origins, # Credentials NOT allowed with wildcard origin
+    allow_origins=["*"] if allow_all_origins else cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount static files to allow direct access to CV if needed
+app.mount("/static", StaticFiles(directory=str(ROOT_DIR / "static")), name="static")
 
 # Configure logging
 logging.basicConfig(

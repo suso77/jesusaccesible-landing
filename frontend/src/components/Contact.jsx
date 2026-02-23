@@ -247,6 +247,13 @@ const Contact = () => {
                 </>
               )}
             </Button>
+
+            {/* Diagnostic info for development/mobile testing */}
+            {(window.location.hostname.includes('192.168.') || window.location.hostname === 'localhost') && (
+              <p style={{ marginTop: '1rem', fontSize: '0.7rem', color: '#666', opacity: 0.7, textAlign: 'center' }}>
+                DEBUG: API is at {BACKEND_URL}
+              </p>
+            )}
           </form>
         </div>
       </div>
