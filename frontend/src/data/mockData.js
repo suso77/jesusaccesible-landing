@@ -13,8 +13,8 @@ export const content = {
       downloadCV: 'Descargar CV'
     },
     hero: {
-      title: 'Jesús Fernández Abeledo',
-      subtitle: 'Consultor & Auditor de Accesibilidad Digital | Analista Web',
+      title: 'Consultor de Accesibilidad Web en Pontevedra y Galicia',
+      subtitle: 'Jesús Fernández Abeledo | Auditor WCAG 2.2 y EN 301 549',
       description: 'Profesional con más de 5 años de experiencia en el ámbito digital, especializado en auditoría de accesibilidad web y app. Mi objetivo: crear experiencias digitales inclusivas para todos los usuarios.',
       cta1: 'Solicitar Auditoría',
       cta2: 'Descargar CV',
@@ -276,13 +276,13 @@ export const content = {
       }
     },
     footer: {
-  copyright: '© 2025 Jesús Fernández Abeledo. Todos los derechos reservados.',
-  wcag: 'Este sitio cumple con WCAG 2.2 Nivel AA',
-  privacy: 'Política de privacidad',
-  legal: 'Aviso legal',
-  accessibility: 'Declaración de accesibilidad',
-  navigation: 'Navegación'
-}
+      copyright: '© 2025 Jesús Fernández Abeledo. Todos los derechos reservados.',
+      wcag: 'Este sitio cumple con WCAG 2.2 Nivel AA',
+      privacy: 'Política de privacidad',
+      legal: 'Aviso legal',
+      accessibility: 'Declaración de accesibilidad',
+      navigation: 'Navegación'
+    }
   },
   en: {
     siteTitle: 'Jesús Fernández Abeledo | Digital Accessibility Consultant',
@@ -298,8 +298,8 @@ export const content = {
       downloadCV: 'Download CV'
     },
     hero: {
-      title: 'Jesús Fernández Abeledo',
-      subtitle: 'Digital Accessibility Consultant & Auditor | Web Analyst',
+      title: 'Digital Accessibility Consultant in Spain',
+      subtitle: 'Jesús Fernández Abeledo | Auditor WCAG 2.2 & EN 301 549',
       description: 'Professional with over 5 years of experience in the digital field, specialized in web and app accessibility auditing. My goal: to create inclusive digital experiences for all users.',
       cta1: 'Request Audit',
       cta2: 'Download CV',
@@ -480,94 +480,94 @@ export const content = {
       },
       cta: 'You can also contact me directly via:'
     },
-      legalPages: {
-        backToHome: 'Back to home',
-        lastUpdated: 'Last updated',
-        legal: {
-          title: 'Legal Notice',
-          sections: [
-            {
-              title: 'Identification',
-              content:
-                'Name: Jesús Fernández Abeledo\n\nLocation: Pontevedra, Galicia, Spain\n\nEmail: s.fernandezabeledo@gmail.com'
-            },
-            {
-              title: 'Purpose',
-              content:
-                'This Legal Notice governs access to and use of this website. Access implies acceptance of the conditions contained herein.'
-            },
-            {
-              title: 'Intellectual Property',
-              content:
-                'All website contents (texts, images, code) are protected by copyright. Reproduction without authorization is prohibited.'
-            },
-            {
-              title: 'Liability',
-              content:
-                'The owner is not responsible for damages resulting from the use of the website or information that may change without notice.'
-            },
-            {
-              title: 'Applicable Law',
-              content: 'These terms are governed by the laws of Spain.'
-            }
-          ]
-        },
-        privacy: {
-          title: 'Privacy Policy',
-          sections: [
-            {
-              title: 'Data Controller',
-              content:
-                'Controller: Jesús Fernández Abeledo\n\nContact: s.fernandezabeledo@gmail.com'
-            },
-            {
-              title: 'Purpose and Legal Basis',
-              content:
-                'Personal data collected through forms is used to respond to inquiries and manage communications. The legal basis is the consent of the user.'
-            },
-            {
-              title: 'Retention',
-              content: 'Data will be kept only as long as necessary to fulfill purposes or comply with legal obligations.'
-            },
-            {
-              title: 'Rights',
-              content:
-                'You can exercise rights of access, rectification, erasure, objection, portability and restriction by contacting the email provided.'
-            }
-          ]
-        },
-        accessibility: {
-          title: 'Accessibility Statement',
-          sections: [
-            {
-              title: 'Conformance Status',
-              content:
-                'This website aims to conform to WCAG 2.2 Level AA. Automated checks and manual tests with assistive technologies have been carried out.'
-            },
-            {
-              title: 'Evaluation',
-              content:
-                'The site has been evaluated using automated tools and manual testing with screen readers such as NVDA and VoiceOver.'
-            },
-            {
-              title: 'Non-accessible Content',
-              content: 'If you find accessibility barriers, please report them including the URL and a short description.'
-            },
-            {
-              title: 'Contact',
-              content: 'Email: s.fernandezabeledo@gmail.com'
-            }
-          ]
-        }
+    legalPages: {
+      backToHome: 'Back to home',
+      lastUpdated: 'Last updated',
+      legal: {
+        title: 'Legal Notice',
+        sections: [
+          {
+            title: 'Identification',
+            content:
+              'Name: Jesús Fernández Abeledo\n\nLocation: Pontevedra, Galicia, Spain\n\nEmail: s.fernandezabeledo@gmail.com'
+          },
+          {
+            title: 'Purpose',
+            content:
+              'This Legal Notice governs access to and use of this website. Access implies acceptance of the conditions contained herein.'
+          },
+          {
+            title: 'Intellectual Property',
+            content:
+              'All website contents (texts, images, code) are protected by copyright. Reproduction without authorization is prohibited.'
+          },
+          {
+            title: 'Liability',
+            content:
+              'The owner is not responsible for damages resulting from the use of the website or information that may change without notice.'
+          },
+          {
+            title: 'Applicable Law',
+            content: 'These terms are governed by the laws of Spain.'
+          }
+        ]
       },
+      privacy: {
+        title: 'Privacy Policy',
+        sections: [
+          {
+            title: 'Data Controller',
+            content:
+              'Controller: Jesús Fernández Abeledo\n\nContact: s.fernandezabeledo@gmail.com'
+          },
+          {
+            title: 'Purpose and Legal Basis',
+            content:
+              'Personal data collected through forms is used to respond to inquiries and manage communications. The legal basis is the consent of the user.'
+          },
+          {
+            title: 'Retention',
+            content: 'Data will be kept only as long as necessary to fulfill purposes or comply with legal obligations.'
+          },
+          {
+            title: 'Rights',
+            content:
+              'You can exercise rights of access, rectification, erasure, objection, portability and restriction by contacting the email provided.'
+          }
+        ]
+      },
+      accessibility: {
+        title: 'Accessibility Statement',
+        sections: [
+          {
+            title: 'Conformance Status',
+            content:
+              'This website aims to conform to WCAG 2.2 Level AA. Automated checks and manual tests with assistive technologies have been carried out.'
+          },
+          {
+            title: 'Evaluation',
+            content:
+              'The site has been evaluated using automated tools and manual testing with screen readers such as NVDA and VoiceOver.'
+          },
+          {
+            title: 'Non-accessible Content',
+            content: 'If you find accessibility barriers, please report them including the URL and a short description.'
+          },
+          {
+            title: 'Contact',
+            content: 'Email: s.fernandezabeledo@gmail.com'
+          }
+        ]
+      }
+    },
     footer: {
-  copyright: '© 2025 Jesús Fernández Abeledo. All rights reserved.',
-  wcag: 'This site complies with WCAG 2.2 Level AA',
-  privacy: 'Privacy Policy',
-  legal: 'Legal Notice',
-  accessibility: 'Accessibility statement',
-  navigation: 'Navigation'
-}
+      copyright: '© 2025 Jesús Fernández Abeledo. All rights reserved.',
+      wcag: 'This site complies with WCAG 2.2 Level AA',
+      privacy: 'Privacy Policy',
+      legal: 'Legal Notice',
+      accessibility: 'Accessibility statement',
+      navigation: 'Navigation'
+    }
   }
 };
 
