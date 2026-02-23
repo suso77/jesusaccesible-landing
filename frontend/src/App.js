@@ -25,21 +25,24 @@ const MainLayout = () => {
     document.documentElement.lang = lang;
 
     const title = isEnglish
-      ? "Jesús Fernández Abeledo | Digital Accessibility Consultant"
-      : "Jesús Fernández Abeledo | Consultor de Accesibilidad Digital";
+      ? "Digital Accessibility Consultant in Spain | WCAG 2.2 & EN 301 549"
+      : "Consultor de Accesibilidad Web en Pontevedra | WCAG 2.2 y EN 301 549";
     document.title = title;
 
-    // hreflang dinámico según ruta
+    // hreflang dinámico según ruta - usando dominio REAL
     const existingHreflangs = document.querySelectorAll('link[rel="alternate"]');
     existingHreflangs.forEach((link) => link.remove());
 
     const path = location.pathname;
     const isEnPath = path.startsWith("/en");
     const pathWithoutLang = isEnPath ? path.replace(/^\/en/, "") || "/" : path;
+    const cleanPath = pathWithoutLang === "/" ? "" : pathWithoutLang;
 
-    const esHref = window.location.origin + pathWithoutLang;
-    const enHref =
-      window.location.origin + (pathWithoutLang === "/" ? "/en" : "/en" + pathWithoutLang);
+    // Hardcoded production domain to avoid preview URLs in SEO tags
+    const productionDomain = "https://www.jesusaccesible.com";
+
+    const esHref = productionDomain + cleanPath || "/";
+    const enHref = productionDomain + "/en" + cleanPath;
 
     const hreflangs = [
       { hreflang: "es-ES", href: esHref },
@@ -58,21 +61,16 @@ const MainLayout = () => {
     // meta description (genérica)
     const metaDescription = document.querySelector('meta[name="description"]');
     const description = isEnglish
-      ? "Digital accessibility consultant and auditor specialized in WCAG 2.2 compliance. Web analytics expert. Pontevedra · Galicia · Spain."
-      : "Consultor y auditor de accesibilidad digital especializado en cumplimiento WCAG 2.2. Experto en analítica web. Pontevedra · Galicia · España.";
+      ? "Digital accessibility consultant and auditor in Spain specialized in WCAG 2.2 and EN 301 549 compliance. Expert in web inclusive experiences."
+      : "Consultor y auditor de accesibilidad web en Pontevedra y Galicia especializado en WCAG 2.2 y normativa EN 301 549 para empresas y sector público.";
 
     if (metaDescription) {
       metaDescription.setAttribute("content", description);
-    } else {
-      const meta = document.createElement("meta");
-      meta.name = "description";
-      meta.content = description;
-      document.head.appendChild(meta);
     }
 
-    // canonical limpio
+    // canonical limpio - usando dominio REAL
     const existingCanonical = document.querySelector('link[rel="canonical"]');
-    const canonicalUrl = window.location.origin + location.pathname;
+    const canonicalUrl = productionDomain + location.pathname;
 
     if (existingCanonical) {
       existingCanonical.href = canonicalUrl;
