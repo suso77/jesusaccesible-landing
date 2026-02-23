@@ -15,7 +15,6 @@ import {
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
 
-// CRA: las variables deben empezar por REACT_APP_
 const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const normalizeBaseUrl = (url) => {
