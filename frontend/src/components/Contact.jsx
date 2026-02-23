@@ -17,15 +17,8 @@ import { serviceOptions } from '../data/mockData';
 
 const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-const normalizeBaseUrl = (url) => {
-  const u = (url ?? '').trim();
-  if (!u) return '';
-  return u.endsWith('/') ? u.slice(0, -1) : u;
-};
-
 const Contact = () => {
   const { language, t } = useLanguage();
-  const BACKEND_URL = useMemo(() => normalizeBaseUrl(RAW_BACKEND_URL), []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -37,7 +30,6 @@ const Contact = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formStatus, setFormStatus] = useState(null);
 
   const validateForm = (data) => {
     const newErrors = {};
@@ -65,28 +57,11 @@ const Contact = () => {
     return newErrors;
   };
 
-  const focusFirstError = (newErrors) => {
-    const firstErrorField = Object.keys(newErrors)[0];
-    if (!firstErrorField) return;
-
-    const elById = document.getElementById(firstErrorField);
-    if (elById && typeof elById.focus === 'function') {
-      elById.focus();
-    } else if (firstErrorField === 'service') {
-      const trigger = document.getElementById('service');
-      if (trigger && typeof trigger.focus === 'function') {
-        trigger.focus();
-      }
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus(null);
 
     const newErrors = validateForm(formData);
     if (Object.keys(newErrors).length > 0) {
-      focusFirstError(newErrors);
       toast({
         title: language === 'es' ? 'Error en el formulario' : 'Form error',
         description: language === 'es'
@@ -97,30 +72,15 @@ const Contact = () => {
       return;
     }
 
-    // Determine backend URL
-    let effectiveBackendUrl = BACKEND_URL || '';
-
-    // Auto-fix for mobile testing: replace localhost with actual IP/hostname
-    if (process.env.NODE_ENV === 'development') {
-      const { hostname } = window.location;
-      if (!effectiveBackendUrl) {
-        effectiveBackendUrl = `http://${hostname}:8000`;
-      } else {
-        effectiveBackendUrl = effectiveBackendUrl
-          .replace('localhost', hostname)
-          .replace('127.0.0.1', hostname);
-      }
-      console.log('Using backend URL:', effectiveBackendUrl);
-    }
-
-    if (!effectiveBackendUrl && process.env.NODE_ENV === 'production') {
-      effectiveBackendUrl = window.location.origin;
+    // Backend URL handling: Use env var or fall back to current origin
+    let backendUrl = (RAW_BACKEND_URL || '').trim().replace(/\/$/, '');
+    if (!backendUrl) {
+      backendUrl = window.location.origin;
     }
 
     setIsSubmitting(true);
     try {
-      const url = `${effectiveBackendUrl}/api/contact`;
-      const response = await fetch(url, {
+      const response = await fetch(`${backendUrl}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -129,27 +89,20 @@ const Contact = () => {
         body: JSON.stringify(formData)
       });
 
-      let payload = {};
-      try {
-        payload = await response.json();
-      } catch (e) {
-        console.error('Invalid JSON response');
-      }
+      const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
         throw new Error(payload?.message || (language === 'es' ? 'Error en el servidor' : 'Server error'));
       }
 
-      setFormStatus('success');
       toast({ title: t.contact.form.success });
       setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
     } catch (error) {
       console.error('Submission error:', error);
-      setFormStatus('error');
       toast({
         title: t.contact.form.error,
-        description: error.message || 'Error de conexión con el servidor',
+        description: error.message || (language === 'es' ? 'Error de conexión' : 'Connection error'),
         variant: 'destructive'
       });
     } finally {

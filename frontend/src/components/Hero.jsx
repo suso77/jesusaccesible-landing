@@ -1,26 +1,12 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Button } from './ui/button';
 import { Download, Mail } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
-const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
 const Hero = () => {
   const { language, t } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
-
-  const BACKEND_URL = useMemo(() => {
-    let url = (RAW_BACKEND_URL || '').trim().replace(/\/$/, '');
-    if (process.env.NODE_ENV === 'development') {
-      const { hostname } = window.location;
-      if (!url) url = `http://${hostname}:8000`;
-      else {
-        url = url.replace('localhost', hostname).replace('127.0.0.1', hostname);
-      }
-    }
-    return url;
-  }, []);
 
   const handleContactClick = () => {
     const contactSection = document.querySelector('#contacto');
@@ -28,8 +14,6 @@ const Hero = () => {
       contactSection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
   };
-
-  const cvUrl = BACKEND_URL ? `${BACKEND_URL}/api/download-cv` : '/CV_Accesibilidad_Jesus_Fernandez.pdf';
 
   return (
     <section id="hero" className="hero" aria-label={t.hero.title}>
@@ -54,7 +38,7 @@ const Hero = () => {
             </Button>
 
             <a
-              href={cvUrl}
+              href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
               download="CV_Accesibilidad_Jesus_Fernandez.pdf"
               target="_blank"
               rel="noopener noreferrer"

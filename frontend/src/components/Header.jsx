@@ -1,12 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Globe } from 'lucide-react';
 import { Button } from './ui/button';
 import { useFocusTrap } from '../hooks/useFocusTrap';
 import Logo from './Logo';
-
-const RAW_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Header = () => {
   const { language, switchLanguage, t } = useLanguage();
@@ -15,20 +13,6 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useFocusTrap(mobileMenuOpen);
   const menuButtonRef = React.useRef(null);
-
-  const BACKEND_URL = useMemo(() => {
-    let url = (RAW_BACKEND_URL || '').trim().replace(/\/$/, '');
-    if (process.env.NODE_ENV === 'development') {
-      const { hostname } = window.location;
-      if (!url) url = `http://${hostname}:8000`;
-      else {
-        url = url.replace('localhost', hostname).replace('127.0.0.1', hostname);
-      }
-    }
-    return url;
-  }, []);
-
-  const cvUrl = BACKEND_URL ? `${BACKEND_URL}/api/download-cv` : '/CV_Accesibilidad_Jesus_Fernandez.pdf';
 
   const legalPaths = ['/legal', '/privacidad', '/accesibilidad', '/en/legal', '/en/privacy', '/en/accessibility'];
   const isLegalPage = legalPaths.includes(location.pathname);
@@ -157,7 +141,7 @@ const Header = () => {
                 ))}
                 <li role="none" className="mobile-nav-cv">
                   <a
-                    href={cvUrl}
+                    href="/CV_Accesibilidad_Jesus_Fernandez.pdf"
                     download="CV_Accesibilidad_Jesus_Fernandez.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
