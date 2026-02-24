@@ -85,16 +85,15 @@ const Contact = () => {
 
     setIsSubmitting(true);
 
+    const apiUrl = `${BACKEND_URL}/api/contact`;
     try {
-      const apiUrl = `${BACKEND_URL}/api/contact`;
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
 
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData),
         mode: 'cors',
@@ -105,26 +104,22 @@ const Contact = () => {
       const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(payload?.detail || payload?.message || 'Error en servidor');
+        throw new Error(payload?.detail || payload?.message || `HTTP ${response.status}`);
       }
 
       toast({ title: t.contact.form.success });
       setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
-      setApiStatus('online'); // Form success indicates API is definitely online
+      setApiStatus('online');
     } catch (error) {
       console.error('[CRITICAL] Contact form submission failed:', error);
       setApiStatus('offline');
 
       let errorMessage = error.message;
       if (error.name === 'AbortError') {
-        errorMessage = language === 'es'
-          ? 'El servidor no responde (Timeout). Asegúrate de que el backend esté corriendo.'
-          : 'Server timeout. Ensure the backend is running.';
+        errorMessage = language === 'es' ? 'Timeout: Servidor lento' : 'Timeout: Slow server';
       } else if (error.message.includes('Failed to fetch')) {
-        errorMessage = language === 'es'
-          ? `No se puede conectar con el servidor en ${BACKEND_URL}. Verifica que el puerto 8000 esté abierto en el Firewall de tu Mac y que uvicorn use --host 0.0.0.0`
-          : `Cannot connect to server at ${BACKEND_URL}. Verify port 8000 is open in your Firewall and uvicorn is using --host 0.0.0.0`;
+        errorMessage = language === 'es' ? 'Fallo de conexión (Red/CORS)' : 'Connection failed (Network/CORS)';
       }
 
       toast({
@@ -133,9 +128,17 @@ const Contact = () => {
         variant: 'destructive'
       });
 
-      // Quick alert for mobile debugging - helps identify if the browser can't even start the fetch
+      // Forensic alert for mobile debugging
       if (/iPhone|Android|iPad/i.test(navigator.userAgent)) {
-        alert(`ERR: ${errorMessage}\nAPI: ${apiUrl}`);
+        alert(
+          `DEBUG REPORT\n` +
+          `-------------\n` +
+          `Error: ${error.name}: ${error.message}\n` +
+          `Origin: ${window.location.origin}\n` +
+          `Target: ${apiUrl}\n` +
+          `Protocol Match: ${window.location.protocol === new URL(apiUrl).protocol ? 'YES' : 'NO'}\n` +
+          `Check: Ensure uvicorn has --host 0.0.0.0`
+        );
       }
     } finally {
       setIsSubmitting(false);
@@ -149,7 +152,6 @@ const Contact = () => {
 
   const isDevelopmentHost = useMemo(() => {
     const { hostname } = window.location;
-    // Any IPv4 address OR localhost
     return /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(hostname) ||
       ['localhost', '127.0.0.1'].some(h => hostname.includes(h));
   }, []);
@@ -164,7 +166,7 @@ const Contact = () => {
           <div className="contact-info">
             <h3 className="contact-info-title">{t.contact.cta}</h3>
 
-            {/* API Status Indicator - visible on any IP-based access or localhost */}
+            {/* API Status Indicator */}
             {isDevelopmentHost && (
               <div className={`api-status-badge ${apiStatus}`} style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}>
                 {apiStatus === 'checking' && <div className="spinner-small" style={{ width: '12px', height: '12px', border: '2px solid #ccc', borderTopColor: '#333', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />}
