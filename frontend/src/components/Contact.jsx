@@ -132,6 +132,11 @@ const Contact = () => {
         description: errorMessage,
         variant: 'destructive'
       });
+
+      // Quick alert for mobile debugging - helps identify if the browser can't even start the fetch
+      if (/iPhone|Android|iPad/i.test(navigator.userAgent)) {
+        alert(`ERR: ${errorMessage}\nAPI: ${apiUrl}`);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -141,6 +146,13 @@ const Contact = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: '' }));
   };
+
+  const isDevelopmentHost = useMemo(() => {
+    const { hostname } = window.location;
+    // Any IPv4 address OR localhost
+    return /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(hostname) ||
+      ['localhost', '127.0.0.1'].some(h => hostname.includes(h));
+  }, []);
 
   return (
     <section id="contacto" className="section" aria-labelledby="contact-heading">
@@ -152,16 +164,16 @@ const Contact = () => {
           <div className="contact-info">
             <h3 className="contact-info-title">{t.contact.cta}</h3>
 
-            {/* API Status Indicator for debugging mobile issues */}
-            {(window.location.hostname.includes('192.168.') || window.location.hostname === 'localhost') && (
+            {/* API Status Indicator - visible on any IP-based access or localhost */}
+            {isDevelopmentHost && (
               <div className={`api-status-badge ${apiStatus}`} style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}>
                 {apiStatus === 'checking' && <div className="spinner-small" style={{ width: '12px', height: '12px', border: '2px solid #ccc', borderTopColor: '#333', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />}
                 {apiStatus === 'online' && <CheckCircle size={16} color="#22c55e" />}
                 {apiStatus === 'offline' && <AlertTriangle size={16} color="#ef4444" />}
-                <span style={{ color: apiStatus === 'offline' ? '#ef4444' : 'inherit' }}>
-                  {apiStatus === 'checking' && (language === 'es' ? 'Comprobando conexión...' : 'Checking connection...')}
-                  {apiStatus === 'online' && (language === 'es' ? 'Servidor conectado' : 'Server connected')}
-                  {apiStatus === 'offline' && (language === 'es' ? 'Servidor no disponible' : 'Server unreachable')}
+                <span style={{ color: apiStatus === 'offline' ? '#ef4444' : 'inherit', fontWeight: 'bold' }}>
+                  {apiStatus === 'checking' && (language === 'es' ? 'CONEXIÓN: COMPROBANDO...' : 'API: CHECKING...')}
+                  {apiStatus === 'online' && (language === 'es' ? 'CONEXIÓN: OK √' : 'API: CONNECTED √')}
+                  {apiStatus === 'offline' && (language === 'es' ? 'CONEXIÓN: FALLIDA X' : 'API: UNREACHABLE X')}
                 </span>
                 <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
               </div>
@@ -271,7 +283,7 @@ const Contact = () => {
               )}
             </Button>
 
-            {(window.location.hostname.includes('192.168.') || window.location.hostname === 'localhost') && (
+            {isDevelopmentHost && (
               <p style={{ marginTop: '1rem', fontSize: '0.65rem', color: '#888', textAlign: 'center' }}>
                 Endpoint: {BACKEND_URL}
               </p>
