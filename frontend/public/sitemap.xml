@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Versión en español -->
+  <!-- Home Español -->
   <url>
     <loc>https://www.jesusaccesible.com/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.jesusaccesible.com/"/>
@@ -13,7 +13,7 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Versión en inglés -->
+  <!-- Home Inglés -->
   <url>
     <loc>https://www.jesusaccesible.com/en/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.jesusaccesible.com/"/>
