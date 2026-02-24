@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Versión en español -->
   <url>
-    <loc>https://digital-a11y.preview.emergentagent.com/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://digital-a11y.preview.emergentagent.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://digital-a11y.preview.emergentagent.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://digital-a11y.preview.emergentagent.com/"/>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://www.jesusaccesible.com/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jesusaccesible.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jesusaccesible.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jesusaccesible.com/"/>
+    <lastmod>2026-02-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Versión en inglés -->
   <url>
-    <loc>https://digital-a11y.preview.emergentagent.com/en/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://digital-a11y.preview.emergentagent.com/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://digital-a11y.preview.emergentagent.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://digital-a11y.preview.emergentagent.com/"/>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://www.jesusaccesible.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jesusaccesible.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jesusaccesible.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jesusaccesible.com/"/>
+    <lastmod>2026-02-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+
 </urlset>
