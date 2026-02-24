@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Globe } from 'lucide-react';
@@ -48,8 +48,10 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  // Direct link to the public static file
-  const cvDownloadUrl = "/CV_Accesibilidad_Jesus_Fernandez.pdf";
+  // Convert relative path to absolute URL for better mobile compatibility
+  const cvDownloadUrl = useMemo(() => {
+    return `${window.location.protocol}//${window.location.host}/CV_Accesibilidad_Jesus_Fernandez.pdf`;
+  }, []);
 
   return (
     <header className="header" role="banner">

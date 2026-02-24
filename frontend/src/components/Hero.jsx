@@ -15,8 +15,10 @@ const Hero = () => {
     }
   };
 
-  // Direct link to the public static file is the most reliable method for simple downloads
-  const cvDownloadUrl = "/CV_Accesibilidad_Jesus_Fernandez.pdf";
+  // Convert relative path to absolute URL for better mobile compatibility
+  const cvDownloadUrl = useMemo(() => {
+    return `${window.location.protocol}//${window.location.host}/CV_Accesibilidad_Jesus_Fernandez.pdf`;
+  }, []);
 
   return (
     <section id="hero" className="hero" aria-label={t.hero.title}>

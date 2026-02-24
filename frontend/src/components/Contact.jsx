@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Mail, Phone, MapPin, Linkedin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Send, AlertTriangle, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -14,7 +14,7 @@ import {
 } from './ui/select';
 import { toast } from '../hooks/use-toast';
 import { serviceOptions } from '../data/mockData';
-import { getBackendUrl } from '../utils/api';
+import { getBackendUrl, checkBackendHealth } from '../utils/api';
 
 const Contact = () => {
   const { language, t } = useLanguage();
@@ -29,9 +29,18 @@ const Contact = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiStatus, setApiStatus] = useState('checking'); // 'checking' | 'online' | 'offline'
 
-  // Use shared utility for backend URL
   const BACKEND_URL = useMemo(() => getBackendUrl(), []);
+
+  // Check API connectivity on mount
+  useEffect(() => {
+    const runHealthCheck = async () => {
+      const isOnline = await checkBackendHealth();
+      setApiStatus(isOnline ? 'online' : 'offline');
+    };
+    runHealthCheck();
+  }, []);
 
   const validateForm = (data) => {
     const newErrors = {};
@@ -44,7 +53,6 @@ const Contact = () => {
       newErrors.email = t.contact.form.emailInvalid;
     }
 
-    // Improved phone validation: allow optional + and common separators
     if (data.phone.trim()) {
       const phoneDigits = data.phone.replace(/\D/g, '');
       if (phoneDigits && phoneDigits.length < 9) {
@@ -79,11 +87,8 @@ const Contact = () => {
 
     try {
       const apiUrl = `${BACKEND_URL}/api/contact`;
-      console.log('[DEBUG] Attempting contact submission to:', apiUrl);
-
-      // We use a timeout to detect when the backend is completely unreachable
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -106,8 +111,10 @@ const Contact = () => {
       toast({ title: t.contact.form.success });
       setFormData({ name: '', email: '', phone: '', service: '', message: '' });
       setErrors({});
+      setApiStatus('online'); // Form success indicates API is definitely online
     } catch (error) {
       console.error('[CRITICAL] Contact form submission failed:', error);
+      setApiStatus('offline');
 
       let errorMessage = error.message;
       if (error.name === 'AbortError') {
@@ -116,8 +123,8 @@ const Contact = () => {
           : 'Server timeout. Ensure the backend is running.';
       } else if (error.message.includes('Failed to fetch')) {
         errorMessage = language === 'es'
-          ? `No se puede conectar con el backend (${BACKEND_URL}). Verifica la red local y que el servidor use --host 0.0.0.0`
-          : `Cannot connect to backend (${BACKEND_URL}). Check local network and --host 0.0.0.0`;
+          ? `No se puede conectar con el servidor en ${BACKEND_URL}. Verifica que el puerto 8000 esté abierto en el Firewall de tu Mac y que uvicorn use --host 0.0.0.0`
+          : `Cannot connect to server at ${BACKEND_URL}. Verify port 8000 is open in your Firewall and uvicorn is using --host 0.0.0.0`;
       }
 
       toast({
@@ -144,6 +151,22 @@ const Contact = () => {
         <div className="contact-wrapper">
           <div className="contact-info">
             <h3 className="contact-info-title">{t.contact.cta}</h3>
+
+            {/* API Status Indicator for debugging mobile issues */}
+            {(window.location.hostname.includes('192.168.') || window.location.hostname === 'localhost') && (
+              <div className={`api-status-badge ${apiStatus}`} style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}>
+                {apiStatus === 'checking' && <div className="spinner-small" style={{ width: '12px', height: '12px', border: '2px solid #ccc', borderTopColor: '#333', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />}
+                {apiStatus === 'online' && <CheckCircle size={16} color="#22c55e" />}
+                {apiStatus === 'offline' && <AlertTriangle size={16} color="#ef4444" />}
+                <span style={{ color: apiStatus === 'offline' ? '#ef4444' : 'inherit' }}>
+                  {apiStatus === 'checking' && (language === 'es' ? 'Comprobando conexión...' : 'Checking connection...')}
+                  {apiStatus === 'online' && (language === 'es' ? 'Servidor conectado' : 'Server connected')}
+                  {apiStatus === 'offline' && (language === 'es' ? 'Servidor no disponible' : 'Server unreachable')}
+                </span>
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+              </div>
+            )}
+
             <ul className="contact-info-list">
               <li>
                 <a href={`mailto:${t.contact.info.email}`} className="contact-info-link">
@@ -248,10 +271,9 @@ const Contact = () => {
               )}
             </Button>
 
-            {/* Diagnostic info for development/mobile testing */}
             {(window.location.hostname.includes('192.168.') || window.location.hostname === 'localhost') && (
-              <p style={{ marginTop: '1rem', fontSize: '0.7rem', color: '#666', opacity: 0.7, textAlign: 'center' }}>
-                DEBUG: API is at {BACKEND_URL}
+              <p style={{ marginTop: '1rem', fontSize: '0.65rem', color: '#888', textAlign: 'center' }}>
+                Endpoint: {BACKEND_URL}
               </p>
             )}
           </form>
